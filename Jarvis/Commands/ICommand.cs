@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Jarvis
+namespace Jarvis.Commands
 {
-    public interface IHandler
+    public interface ICommand
     {
         string Handle(string input, Match match);
         string Regexes { get; }

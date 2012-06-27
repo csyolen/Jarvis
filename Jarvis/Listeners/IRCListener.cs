@@ -7,7 +7,7 @@ using Meebey.SmartIrc4net;
 
 namespace Jarvis.Listeners
 {
-    public class IRCListener : GenericListener
+    public class IRCListener : ListenerBase
     {
         private IrcClient _client;
         public IRCListener(Pipe pipe) : base(pipe)
@@ -47,6 +47,7 @@ namespace Jarvis.Listeners
                     _client.Message(SendType.Message, channel, line);
                 }
             }
+            Brain.ListenerManager.Voice.Output(output);
         }
     }
 }

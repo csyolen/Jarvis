@@ -46,9 +46,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\libs\Meebey.SmartIrc4net.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.4.5.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\twitterizer.2.4.1.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -60,6 +59,15 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Twitterizer2">
+      <HintPath>..\packages\twitterizer.2.4.1.1\lib\net40\Twitterizer2.dll</HintPath>
+    </Reference>
+    <Reference Include="Twitterizer2.Asynchronous">
+      <HintPath>..\packages\twitterizer.2.4.1.1\lib\net40\Twitterizer2.Asynchronous.dll</HintPath>
+    </Reference>
+    <Reference Include="Twitterizer2.Streaming">
+      <HintPath>..\packages\twitterizer.2.4.1.1\lib\net40\Twitterizer2.Streaming.dll</HintPath>
     </Reference>
     <Reference Include="Viagra, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -75,7 +83,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Brain.cs" />
-    <Compile Include="Handlers\RunnableHandler.cs" />
+    <Compile Include="Commands\RatingCommand.cs" />
+    <Compile Include="Commands\RunnableCommand.cs" />
+    <Compile Include="Commands\SayCommand.cs" />
+    <Compile Include="Commands\VideoCommand.cs" />
+    <Compile Include="Listeners\SocketListener.cs" />
     <Compile Include="Pipe.cs" />
     <Compile Include="Runnables\IRunnable.cs" />
     <Compile Include="Runnables\ProcessRunnable.cs" />
@@ -85,7 +97,9 @@
     <Compile Include="Tickers\TickerBase.cs" />
     <Compile Include="Tickers\ScheduleTicker.cs" />
     <Compile Include="Tickers\TVTicker.cs" />
+    <Compile Include="Tickers\TwitterTicker.cs" />
     <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Views\ImageView.xaml.cs">
       <DependentUpon>ImageView.xaml</DependentUpon>
     </Compile>
@@ -93,14 +107,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Handlers\IHandler.cs" />
-    <Compile Include="Handlers\ScheduleHandler.cs" />
-    <Compile Include="Handlers\ScheduleListHandler.cs" />
-    <Compile Include="Handlers\SearchHandler.cs" />
-    <Compile Include="Handlers\ThinkHandler.cs" />
-    <Compile Include="Handlers\WeatherHandler.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ScheduleCommand.cs" />
+    <Compile Include="Commands\ScheduleListCommand.cs" />
+    <Compile Include="Commands\SearchCommand.cs" />
+    <Compile Include="Commands\ThinkCommand.cs" />
+    <Compile Include="Commands\WeatherCommand.cs" />
     <Compile Include="Listeners\ConsoleListener.cs" />
-    <Compile Include="Listeners\GenericListener.cs" />
+    <Compile Include="Listeners\ListenerBase.cs" />
     <Compile Include="Listeners\IListener.cs" />
     <Compile Include="Listeners\IRCListener.cs" />
     <Compile Include="Listeners\ListenerManager.cs" />
@@ -159,6 +173,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Twitterizer2.license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="GettingStarted.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

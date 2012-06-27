@@ -10,23 +10,19 @@ namespace Jarvis.Listeners
     {
         public ListenerManager(Pipe pipe)
         {
-            Listeners = new List<IListener>();
-
             IRC = new IRCListener(pipe);
             IRC.Start();
-            Listeners.Add(IRC);
 
             Console = new ConsoleListener(pipe);
             //Console.Start();
-            Listeners.Add(Console);
 
             Voice = new VoiceListener(pipe);
             Voice.Start();
-            Listeners.Add(Voice);
 
             new TLListener(pipe).Start();
+            new SocketListener(pipe).Start();
 
-            CurrentListener = Voice;
+            CurrentListener = IRC;
         }
 
         public IListener CurrentListener { get; private set; }
@@ -34,7 +30,5 @@ namespace Jarvis.Listeners
         public IRCListener IRC { get; private set; }
         public ConsoleListener Console { get; private set; }
         public VoiceListener Voice { get; private set; }
-
-        public List<IListener> Listeners { get; private set; } 
     }
 }

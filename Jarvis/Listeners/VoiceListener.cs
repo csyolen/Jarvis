@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Jarvis.Listeners
 {
-    public class VoiceListener : GenericListener
+    public class VoiceListener : ListenerBase
     {
         private readonly SpeechSynthesizer _synthesizer;
 
@@ -19,12 +19,25 @@ namespace Jarvis.Listeners
 
         public override void Loop()
         {
-
+            using (var recognizer = new SpeechRecognitionEngine(new System.Globalization.CultureInfo("en-US")))
+            {
+                recognizer.LoadGrammar(new DictationGrammar());
+                while (true)
+                {
+                    recognizer.SetInputToDefaultAudioDevice();
+                    var result = recognizer.Recognize();
+                    if(result == null) continue;
+                    Handle(result.Text);
+                }
+            }
         }
 
+        private Prompt _current;
         public override void Output(string output)
         {
-            _synthesizer.SpeakAsync(output);
+            if(_current != null)
+                _synthesizer.SpeakAsyncCancel(_current);
+            _current = _synthesizer.SpeakAsync(output);
         }
     }
 }

@@ -8,13 +8,24 @@ namespace Jarvis
 {
     static class Constants
     {
-        public static DirectoryInfo Path
+        public static DirectoryInfo ConfigDirectory 
         {
             get
             {
                 var path = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Jarvis");
                 if(!path.Exists)
                     path.Create();
+                return path;
+            }
+        }
+
+        public static FileInfo SettingsFile
+        {
+            get
+            {
+                var path = new FileInfo(ConfigDirectory.FullName + @"\settings");
+                if (!path.Exists)
+                    path.Create().Close();
                 return path;
             }
         }

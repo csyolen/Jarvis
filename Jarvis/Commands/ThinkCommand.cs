@@ -8,19 +8,17 @@ using System.Xml;
 using Jarvis.Locale;
 using Jarvis.Objects;
 using Jarvis.Objects.Reference;
-using Jarvis.Runnables;
 
-namespace Jarvis.Handlers
+namespace Jarvis.Commands
 {
-    class WeatherHandler : IHandler
+    class ThinkCommand : ICommand
     {
         public string Handle(string input, Match match)
         {
-            var weather = new Weather();
-            Brain.RunnableManager.Runnable = new ProcessRunnable(weather.Link);
-            return weather.ToString();
+            Brain.Think = input.Contains("start");
+            return Brain.Think ? "I shall start thinking." : "I will stop thinking.";
         }
 
-        public string Regexes { get { return "weather"; } }
+        public string Regexes { get { return @"(start|stop)\s+(talking|thinking)"; } }
     }
 }

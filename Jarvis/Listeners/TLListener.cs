@@ -9,7 +9,7 @@ using TLBot;
 
 namespace Jarvis.Listeners
 {
-    class TLListener : GenericListener
+    class TLListener : ListenerBase
     {
         private static IrcClient _bot;
         private static HashSet<string> _shows;

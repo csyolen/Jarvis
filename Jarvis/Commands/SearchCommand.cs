@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using Jarvis.Objects.Reference;
 using Jarvis.Runnables;
 
-namespace Jarvis.Handlers
+namespace Jarvis.Commands
 {
-    class SearchHandler : IHandler
+    class SearchCommand : ICommand
     {
         public string Handle(string input, Match match)
         {

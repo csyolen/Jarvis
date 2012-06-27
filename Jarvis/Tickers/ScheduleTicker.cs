@@ -11,7 +11,7 @@ namespace Jarvis.Tickers
 {
     class ScheduleTicker : TickerBase
     {
-        private string _path = Constants.Path.FullName + "/schedule.txt";
+        private string _path = Constants.ConfigDirectory.FullName + "/schedule.txt";
         public ScheduleTicker() : base(60000)
         {
             Tasks = new HashSet<ScheduledTask>();
@@ -36,7 +36,6 @@ namespace Jarvis.Tickers
                 foreach (var task in expired)
                 {
                     Brain.ListenerManager.CurrentListener.Output(task.Description);
-                    Brain.ListenerManager.IRC.Output(task.Description);
                 }
                 Tasks = new HashSet<ScheduledTask>(Tasks.Where(o => o.DateTime > now));
 

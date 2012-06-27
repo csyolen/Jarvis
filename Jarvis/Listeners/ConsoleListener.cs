@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Jarvis.Listeners
 {
-    public class ConsoleListener : GenericListener
+    public class ConsoleListener : ListenerBase
     {
         public ConsoleListener(Pipe pipe) : base(pipe)
         {

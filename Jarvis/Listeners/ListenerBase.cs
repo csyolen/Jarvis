@@ -6,10 +6,10 @@ using System.Threading;
 
 namespace Jarvis.Listeners
 {
-    public abstract class GenericListener : IListener
+    public abstract class ListenerBase : IListener
     {
         protected Pipe Pipe;
-        protected GenericListener(Pipe pipe)
+        protected ListenerBase(Pipe pipe)
         {
             Pipe = pipe;
         }

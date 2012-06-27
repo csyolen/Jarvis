@@ -13,7 +13,7 @@ namespace Jarvis.Locale
 
         public Language()
         {
-            _filePath = new FileInfo(Constants.Path + @"\english.lang");
+            _filePath = new FileInfo(Constants.ConfigDirectory + @"\english.lang");
             if (!_filePath.Exists)
                 _filePath.Create().Close();
             _map = new Dictionary<string, Phrase>();

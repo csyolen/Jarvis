@@ -10,9 +10,9 @@ using Jarvis.Objects;
 using Jarvis.Objects.Reference;
 using Jarvis.Tickers;
 
-namespace Jarvis.Handlers
+namespace Jarvis.Commands
 {
-    class ScheduleListHandler : IHandler
+    class ScheduleListCommand : ICommand
     {
         public string Handle(string input, Match match)
         {

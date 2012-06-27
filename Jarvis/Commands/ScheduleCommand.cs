@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Jarvis.Objects;
 using Jarvis.Tickers;
 
-namespace Jarvis.Handlers
+namespace Jarvis.Commands
 {
-    class ScheduleHandler : IHandler
+    class ScheduleCommand : ICommand
     {
         public string Handle(string input, Match match)
         {
