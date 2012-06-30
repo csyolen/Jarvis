@@ -10,7 +10,8 @@ namespace Jarvis.Locale
     {
         Weather,
         Jacket,
-        Open
+        Yes,
+        Email
     }
 
     public static class SpeechExtensions

@@ -23,10 +23,13 @@ namespace Jarvis
 
         private static Pipe Pipe { get; set; }
         private static readonly Bot Bot = new Bot();
-        private static readonly User User = new User("Jarvis", Bot); 
+        private static readonly User User = new User("Jarvis", Bot);
+
+        public static bool Awake { get; set; }
   
         public static void Start()
         {
+            Awake = true;
             Settings = new Settings();
             Pipe = new Pipe();
 

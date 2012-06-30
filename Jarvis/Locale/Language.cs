@@ -17,7 +17,7 @@ namespace Jarvis.Locale
             if (!_filePath.Exists)
                 _filePath.Create().Close();
             _map = new Dictionary<string, Phrase>();
-            var lines = File.ReadAllLines(_filePath.FullName);
+            var lines = File.ReadAllLines(_filePath.FullName).Where(x => !x.IsBlank());
             foreach (var splits in lines.Select(line => line.Split('=')).Where(splits => splits.Length == 2))
             {
                 var key = splits[0].ToLower();

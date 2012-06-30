@@ -19,6 +19,7 @@ namespace Jarvis.Listeners
 
         public override void Loop()
         {
+            return;
             using (var recognizer = new SpeechRecognitionEngine(new System.Globalization.CultureInfo("en-US")))
             {
                 recognizer.LoadGrammar(new DictationGrammar());
@@ -35,6 +36,8 @@ namespace Jarvis.Listeners
         private Prompt _current;
         public override void Output(string output)
         {
+            if(!Brain.Awake)
+                return;
             if(_current != null)
                 _synthesizer.SpeakAsyncCancel(_current);
             _current = _synthesizer.SpeakAsync(output);

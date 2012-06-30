@@ -7,7 +7,7 @@ namespace Jarvis.Commands
     {
         public string Handle(string input, Match match)
         {
-            return Brain.RunnableManager.Run() ? Speech.Open.Parse() : "";
+            return Brain.RunnableManager.Run() ? Speech.Yes.Parse() : "";
         }
 
         public string Regexes

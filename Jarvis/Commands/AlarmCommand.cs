@@ -4,17 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Jarvis.Tickers;
 
 namespace Jarvis.Commands
 {
-    class SayCommand : ICommand
+    class AlarmCommand : ICommand
     {
         public string Handle(string input, Match match)
         {
-            var text = match.Groups[1].Value;
-            return text;
+            ClockTicker.Instance.StopAlarm();
+            Brain.Awake = true;
+            return "Good morning sir.";
         }
 
-        public string Regexes { get { return "say (.+)"; } }
+        public string Regexes { get { return "alarm"; } }
     }
 }
