@@ -25,7 +25,7 @@ namespace Jarvis.Tickers
             }
         }
 
-        protected override void Tick(object sender, ElapsedEventArgs e)
+        protected override void Tick()
         {
             IEnumerable<Tweet> json;
             try {json = JToken.Parse(new BrowserClient().DownloadString(_api))["results"]

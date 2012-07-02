@@ -105,6 +105,7 @@
     <Compile Include="Commands\SayCommand.cs" />
     <Compile Include="Commands\VideoCommand.cs" />
     <Compile Include="Listeners\SocketListener.cs" />
+    <Compile Include="Objects\RssFeed.cs" />
     <Compile Include="Pipe.cs" />
     <Compile Include="Runnables\IRunnable.cs" />
     <Compile Include="Runnables\ProcessRunnable.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Tickers\ClockTicker.cs" />
     <Compile Include="Tickers\FacebookTicker.cs" />
     <Compile Include="Tickers\GmailTicker.cs" />
+    <Compile Include="Tickers\RssTicker.cs" />
     <Compile Include="Tickers\TickerBase.cs" />
     <Compile Include="Tickers\ScheduleTicker.cs" />
     <Compile Include="Tickers\TVTicker.cs" />

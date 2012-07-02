@@ -20,7 +20,7 @@ namespace Jarvis.Tickers
 
         public static ClockTicker Instance { get; private set; }
 
-        protected override void Tick(object sender, ElapsedEventArgs e)
+        protected override void Tick()
         {
             var now = DateTime.Now;
             if(now.Minute == 0 && now.Second == 0)

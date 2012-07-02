@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Jarvis.Listeners;
 using Jarvis.Locale;
 using Jarvis.Objects;
 using Jarvis.Objects.Reference;
@@ -14,7 +15,7 @@ namespace Jarvis.Commands
 {
     class ScheduleListCommand : ICommand
     {
-        public string Handle(string input, Match match)
+        public string Handle(string input, Match match, IListener listener)
         {
             var output = ScheduleTicker.Instance.Tasks
                 .Where(o => o.DateTime < DateTime.Now.AddDays(2))

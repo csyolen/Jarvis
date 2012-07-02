@@ -26,7 +26,7 @@ namespace Jarvis.Tickers
         public HashSet<ScheduledTask> Tasks { get; private set; }
 
         private object _lock = new object();
-        protected override void Tick(object sender, ElapsedEventArgs e)
+        protected override void Tick()
         {
             lock (_lock)
             {

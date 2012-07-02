@@ -15,7 +15,7 @@ namespace Jarvis.Tickers
         protected TickerBase(double interval)
         {
             _timer = new Timer(interval);
-            _timer.Elapsed += Tick;
+            _timer.Elapsed += (sender, args) => Tick();
         }
 
         protected TickerBase(TimeSpan interval)
@@ -24,12 +24,12 @@ namespace Jarvis.Tickers
             
         }
 
-        protected abstract void Tick(object sender, ElapsedEventArgs e);
+        protected abstract void Tick();
 
         public void Start()
         {
             _timer.Start();
-            Tick(null,null);
+            Tick();
         }
 
         public void Stop()

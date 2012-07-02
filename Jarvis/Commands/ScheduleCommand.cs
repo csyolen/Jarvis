@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Jarvis.Listeners;
 using Jarvis.Tickers;
 
 namespace Jarvis.Commands
 {
     class ScheduleCommand : ICommand
     {
-        public string Handle(string input, Match match)
+        public string Handle(string input, Match match, IListener listener)
         {
             var task = input.RegexMatch(@".*(?=at)").Value;
             var time = input.RegexMatch(@"\d+:\d+").Value;

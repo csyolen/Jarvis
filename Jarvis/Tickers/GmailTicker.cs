@@ -21,7 +21,7 @@ namespace Jarvis.Tickers
         {
         }
 
-        protected override void Tick(object sender, ElapsedEventArgs e)
+        protected override void Tick()
         {
             foreach (var account in Brain.Settings.Accounts)
             {
@@ -34,7 +34,7 @@ namespace Jarvis.Tickers
                     if (entry.Issued < last)
                         continue;
                     Brain.ListenerManager.CurrentListener.Output(Speech.Email.Parse(entry.Author.Name, entry.Title));
-                    Brain.RunnableManager.Runnable = new ProcessRunnable("http://gmail.com");
+                    Brain.RunnableManager.Runnable = new ProcessRunnable(entry.Link);
                 }
             }
         }

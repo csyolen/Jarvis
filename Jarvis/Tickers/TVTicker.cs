@@ -15,7 +15,7 @@ namespace Jarvis.Tickers
         {
         }
 
-        protected override void Tick(object sender, ElapsedEventArgs e)
+        protected override void Tick()
         {
             string url = "http://followmy.tv/calendar.ics?apikey=4cf8599d-8d00-46c0-a2f5-0c5abc287203";
 

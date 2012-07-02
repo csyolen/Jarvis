@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
-using System.Xml;
 using Jarvis.Objects;
 
 namespace Jarvis.Tickers
 {
-    class FacebookTicker : TickerBase
+    class RssTicker : TickerBase
     {
-        private const string Url =
-            "http://www.facebook.com/feeds/notifications.php?id=1342020455&viewer=1342020455&key=AWghxjJ6roByavRp&format=rss20";
+        public string Url { get; private set; }
 
-
-        public FacebookTicker() : base(1.Minutes())
+        public RssTicker(string url) : base(1.Minutes())
         {
+            Url = url;
         }
 
         protected override void Tick()

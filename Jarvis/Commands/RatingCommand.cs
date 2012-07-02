@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Jarvis.Listeners;
 using Jarvis.Objects.Reference;
 
 namespace Jarvis.Commands
 {
     class RatingCommand : ICommand
     {
-        public string Handle(string input, Match match)
+        public string Handle(string input, Match match, IListener listener)
         {
             var query = match.Groups[1].Value.Trim();
             var imdb = new IMDB(query, true);

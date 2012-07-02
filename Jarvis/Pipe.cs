@@ -28,13 +28,15 @@ namespace Jarvis
             if(input == null) return;
             input = input.ToLower();
             bool handled = false;
+
             foreach (var output in _commands
                 .Where(o => input.IsRegexMatch(o.Regexes))
-                .Select(handler => handler.Handle(input, input.RegexMatch(handler.Regexes))))
+                .Select(handler => handler.Handle(input, input.RegexMatch(handler.Regexes), listener)))
             {
                 handled = true;
                 listener.Output(output);
             }
+
             if (handled || !Brain.Think) return;
             var chat = Brain.Chat(input);
             listener.Output(chat);

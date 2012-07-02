@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Jarvis.Listeners;
 
 namespace Jarvis.Commands
 {
     class CloseCommand : ICommand 
     {
-        public string Handle(string input, Match match)
+        public string Handle(string input, Match match, IListener listener)
         {
             var process = match.Groups[1].Value.ToLower();
             var list = Process.GetProcesses().Where(o => o.ProcessName.ToLower().Contains(process)).ToList();
