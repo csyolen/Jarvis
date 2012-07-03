@@ -32,7 +32,7 @@ namespace Jarvis.Tickers
                 .Select(o => new Tweet(o));}
             catch { return;}
             var last = DateTime.Now.Subtract(1.Minutes());
-            foreach (var tweet in json.Where(o => o.Time > last))
+            foreach (var tweet in json.Where(o => o.Time.IsFuture(last)))
             {
                 Brain.ListenerManager.CurrentListener.Output(tweet.Text);
                 if(tweet.Urls.Count > 0)

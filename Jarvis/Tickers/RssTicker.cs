@@ -19,7 +19,7 @@ namespace Jarvis.Tickers
 
         protected override void Tick()
         {
-            foreach (RssItem item in new RssFeed(Url).New(DateTime.Now.Subtract(1.Minutes())))
+            foreach (var item in new RssFeed(Url).New(DateTime.Now.Subtract(1.Minutes())))
             {
                 Brain.ListenerManager.CurrentListener.Output(item.Title);
             }

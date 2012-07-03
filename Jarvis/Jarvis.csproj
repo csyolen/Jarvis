@@ -106,7 +106,9 @@
     <Compile Include="Commands\VideoCommand.cs" />
     <Compile Include="Listeners\SocketListener.cs" />
     <Compile Include="Objects\RssFeed.cs" />
+    <Compile Include="Objects\XboxLive.cs" />
     <Compile Include="Pipe.cs" />
+    <Compile Include="Runnables\ActionRunnable.cs" />
     <Compile Include="Runnables\IRunnable.cs" />
     <Compile Include="Runnables\ProcessRunnable.cs" />
     <Compile Include="Runnables\RunnableManager.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Tickers\ScheduleTicker.cs" />
     <Compile Include="Tickers\TVTicker.cs" />
     <Compile Include="Tickers\TwitterTicker.cs" />
+    <Compile Include="Tickers\XboxTicker.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Views\ImageView.xaml.cs">
