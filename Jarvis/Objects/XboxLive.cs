@@ -27,6 +27,11 @@ namespace Jarvis.Objects {
         {
             return JsonConvert.DeserializeObject<XboxLive>(json);
         }
+
+        public static XboxLive FromGamerTag(string gamer)
+        {
+            return FromJson(new BrowserClient().DownloadString("https://xboxapi.com/friends/" + gamer));
+        }
     }
 
 
@@ -106,6 +111,15 @@ namespace Jarvis.Objects {
 
         //Empty Constructor
         public Friend(){}
+
+        public string Description
+        {
+            get
+            {
+                var p = char.ToLower(Presence[0]) + Presence.Substring(1);
+                return GamerTag.UppercaseFirst() + " is " + p + (RichPresence.IsBlank() ? "" : ": " + RichPresence); 
+            }
+        }
 
     }
 

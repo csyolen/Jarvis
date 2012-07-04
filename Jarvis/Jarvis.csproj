@@ -104,6 +104,7 @@
     <Compile Include="Commands\RunnableCommand.cs" />
     <Compile Include="Commands\SayCommand.cs" />
     <Compile Include="Commands\VideoCommand.cs" />
+    <Compile Include="Commands\XboxCommand.cs" />
     <Compile Include="Listeners\SocketListener.cs" />
     <Compile Include="Objects\RssFeed.cs" />
     <Compile Include="Objects\XboxLive.cs" />
