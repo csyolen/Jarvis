@@ -1,9 +1,9 @@
-﻿<Window Cursor="Hand" x:Class="Jarvis.Views.ImageView"
+﻿<base:Fadeable Cursor="Hand" x:Class="Jarvis.Views.ImageView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ImageView" Height="300" Width="300" AllowsTransparency="True" ShowInTaskbar="False" WindowStyle="None" Background="#BF000000">
-    <Grid Width="500">
-        <Image Name="Image" Width="300"/>
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:base="clr-namespace:Jarvis.Views"
+               Title="ImageView" Topmost="True" Height="300" Width="230" AllowsTransparency="True" ShowInTaskbar="False" WindowStyle="None" SizeToContent="Height">
+    <Grid Width="230">
+        <Image Name="Image" Width="230"/>
 
     </Grid>
-</Window>
+</base:Fadeable>

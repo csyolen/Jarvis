@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -12,6 +13,7 @@ using Jarvis.Locale;
 using Jarvis.Runnables;
 using Jarvis.Tickers;
 using Jarvis.Utilities;
+using Jarvis.Views;
 
 namespace Jarvis
 {
@@ -29,6 +31,13 @@ namespace Jarvis
   
         public static void Start()
         {
+            var processes = Process.GetProcessesByName("jarvis");
+            var p = Process.GetCurrentProcess();
+            foreach (var process in processes.Where(process => p.Id != process.Id))
+            {
+                process.Kill();
+            }
+
             Awake = true;
             Settings = new Settings();
             Pipe = new Pipe();
@@ -64,7 +73,5 @@ namespace Jarvis
             var request = new Request(input, User, Bot);
             return Bot.Chat(request).Output;
         }
-
-        public static bool Think { get; set; }
     }
 }

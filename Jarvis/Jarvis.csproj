@@ -91,6 +91,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WolframAlpha.WrapperCore">
+      <HintPath>..\..\..\libs\WolframAlpha.WrapperCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -104,8 +107,10 @@
     <Compile Include="Commands\RunnableCommand.cs" />
     <Compile Include="Commands\SayCommand.cs" />
     <Compile Include="Commands\VideoCommand.cs" />
+    <Compile Include="Commands\WolframCommand.cs" />
     <Compile Include="Commands\XboxCommand.cs" />
     <Compile Include="Listeners\SocketListener.cs" />
+    <Compile Include="Objects\Reference\Wolfram.cs" />
     <Compile Include="Objects\RssFeed.cs" />
     <Compile Include="Objects\XboxLive.cs" />
     <Compile Include="Pipe.cs" />
@@ -124,6 +129,8 @@
     <Compile Include="Tickers\XboxTicker.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Settings.cs" />
+    <Compile Include="Views\Fadeable.cs" />
+    <Compile Include="Views\FadeableManager.cs" />
     <Compile Include="Views\ImageView.xaml.cs">
       <DependentUpon>ImageView.xaml</DependentUpon>
     </Compile>
@@ -135,7 +142,6 @@
     <Compile Include="Commands\ScheduleCommand.cs" />
     <Compile Include="Commands\ScheduleListCommand.cs" />
     <Compile Include="Commands\SearchCommand.cs" />
-    <Compile Include="Commands\ThinkCommand.cs" />
     <Compile Include="Commands\WeatherCommand.cs" />
     <Compile Include="Listeners\ConsoleListener.cs" />
     <Compile Include="Listeners\ListenerBase.cs" />
@@ -150,11 +156,18 @@
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WeatherView.xaml.cs">
+      <DependentUpon>WeatherView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\ImageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WeatherView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,6 +219,18 @@
     <Resource Include="GettingStarted.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\tile.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Weather\clear.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Weather\overcast.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Weather\partlycloudy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sounds\alarm.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

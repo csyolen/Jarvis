@@ -1,0 +1,12 @@
+﻿<base:Fadeable x:Class="Jarvis.Views.WeatherView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:base="clr-namespace:Jarvis.Views"
+        Title="WeatherView" Topmost="True" Cursor="Hand" Height="100" Width="230" AllowsTransparency="True" ShowInTaskbar="False" WindowStyle="None" Background="#FF00bfff">
+    <Grid>
+        <Label Name="Temperature" Content="72" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="ETH" FontSize="60" Foreground="White" BorderBrush="Black" Margin="10,2,0,0"/>
+        <Label Name="Condition" Content="Partly Cloudy" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" FontFamily="Helvetica LT Std ExtCompressed" FontSize="22" Foreground="White"/>
+        <Image Name="Icon" HorizontalAlignment="Right" Height="60" VerticalAlignment="Center" Width="60" Source="/Jarvis;component/Images/Weather/overcast.png" Margin="0,0,10,0"/>
+
+    </Grid>
+</base:Fadeable>

@@ -5,7 +5,7 @@ using Jarvis.Locale;
 
 namespace Jarvis.Objects.Reference
 {
-    class Weather
+    public class Weather
     {
         private XmlNode _current;
         public string Link { get; private set; }

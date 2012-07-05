@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -21,14 +22,14 @@ namespace Jarvis.Views
     /// Interaction logic for ImageView.xaml
     /// </summary>
     /// 
-    public partial class ImageView : Window
+    public partial class ImageView : Fadeable
     {
         public static void Create(string url)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 var view = new ImageView(url);
-                view.Show();
+                view.FadeIn();
             });
         }
 
@@ -37,18 +38,14 @@ namespace Jarvis.Views
             Application.Current.Dispatcher.Invoke(() =>
             {
                 var view = new ImageView(url, link);
-                view.Show();
+                view.FadeIn();
             });
         }
 
         public ImageView(string url)
         {
             InitializeComponent();
-            this.Width = SystemParameters.PrimaryScreenWidth;
-            this.Height = SystemParameters.PrimaryScreenHeight;
-            this.Left = 0;
-            this.Top = 0;
-            this.MouseLeftButtonUp += (sender, args) => this.Close();
+
             var wc = new WebClient();
             var image = new BitmapImage();
             image.BeginInit();
@@ -62,7 +59,7 @@ namespace Jarvis.Views
         public ImageView(string url, string link)
             :this(url)
         {
-            Image.MouseLeftButtonUp += (sender, args) => Process.Start(link);
+            Image.MouseRightButtonUp += (sender, args) => Process.Start(link);
         }
     }
 }

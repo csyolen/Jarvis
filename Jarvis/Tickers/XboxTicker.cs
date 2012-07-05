@@ -19,6 +19,7 @@ namespace Jarvis.Tickers
         protected override void Tick()
         {
             var xbox = XboxLive.FromGamerTag("dharun");
+            if (!xbox.Success) return;
             foreach (var source in xbox.Friends.Select(x => new
                 { Old = _old.Friends.FirstOrDefault(o => o.GamerTag == x.GamerTag), New = x }))
             {

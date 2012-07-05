@@ -10,6 +10,7 @@ using Jarvis.Locale;
 using Jarvis.Objects;
 using Jarvis.Objects.Reference;
 using Jarvis.Runnables;
+using Jarvis.Views;
 
 namespace Jarvis.Commands
 {
@@ -19,6 +20,7 @@ namespace Jarvis.Commands
         {
             var weather = new Weather();
             Brain.RunnableManager.Runnable = new ProcessRunnable(weather.Link);
+            WeatherView.Create(weather);
             return weather.ToString();
         }
 

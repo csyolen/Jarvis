@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Jarvis.Commands;
 using Jarvis.Listeners;
+using WolframAlpha.WrapperCore;
 
 namespace Jarvis
 {
@@ -29,17 +30,13 @@ namespace Jarvis
             input = input.ToLower();
             bool handled = false;
 
-            foreach (var output in _commands
-                .Where(o => input.IsRegexMatch(o.Regexes))
-                .Select(handler => handler.Handle(input, input.RegexMatch(handler.Regexes), listener)))
+            foreach (var command in _commands)
             {
-                handled = true;
-                listener.Output(output);
+                var match = input.RegexMatch(command.Regexes);
+                if(!match.Success)
+                    continue;
+                listener.Output(command.Handle(input, match, listener));
             }
-
-            if (handled || !Brain.Think) return;
-            var chat = Brain.Chat(input);
-            listener.Output(chat);
         }
     }
 }

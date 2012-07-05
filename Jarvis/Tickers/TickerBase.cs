@@ -15,7 +15,18 @@ namespace Jarvis.Tickers
         protected TickerBase(double interval)
         {
             _timer = new Timer(interval);
-            _timer.Elapsed += (sender, args) => Tick();
+            _timer.Elapsed += (sender, args) =>
+                {
+                    try
+                    {
+                        Tick();
+                    }
+                    catch(Exception e)
+                    {
+                        var n = this.GetType().Name;
+                        Brain.ListenerManager.CurrentListener.Output("Sir I've received an error at {0}: {1}".Template(n, e.Message));
+                    }
+                };
         }
 
         protected TickerBase(TimeSpan interval)
