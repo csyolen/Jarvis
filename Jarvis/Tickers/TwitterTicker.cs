@@ -22,10 +22,10 @@ namespace Jarvis.Tickers
         {
             var last = DateTime.Now.Subtract(1.Minutes());
             var tweets = TwitterSearch.FromUsers(Brain.Settings.Twitters.ToArray());
-            foreach (var tweet in tweets.Results.Where(o => o.Time.IsFuture(last)))
+            foreach (var tweet in tweets.Results.Where(o => o.Time > last))
             {
-                Brain.ListenerManager.CurrentListener.Output(tweet.Text);
-                if(tweet.Entities.TwitterEntityUrls.Any())
+                Brain.ListenerManager.CurrentListener.Output("{0}: {1}".Template(tweet.From_user_name, tweet.Text));
+                if(tweet.Entities != null && tweet.Entities.TwitterEntityUrls != null)
                     Brain.RunnableManager.Runnable = new ProcessRunnable(tweet.Entities.TwitterEntityUrls.First().Url);
             }
             
