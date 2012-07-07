@@ -75,15 +75,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Twitterizer2">
-      <HintPath>..\packages\twitterizer.2.4.1.1\lib\net40\Twitterizer2.dll</HintPath>
-    </Reference>
-    <Reference Include="Twitterizer2.Asynchronous">
-      <HintPath>..\packages\twitterizer.2.4.1.1\lib\net40\Twitterizer2.Asynchronous.dll</HintPath>
-    </Reference>
-    <Reference Include="Twitterizer2.Streaming">
-      <HintPath>..\packages\twitterizer.2.4.1.1\lib\net40\Twitterizer2.Streaming.dll</HintPath>
-    </Reference>
     <Reference Include="Viagra, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Viagra\Viagra\bin\Debug\Viagra.dll</HintPath>
@@ -112,6 +103,7 @@
     <Compile Include="Listeners\SocketListener.cs" />
     <Compile Include="Objects\Reference\Wolfram.cs" />
     <Compile Include="Objects\RssFeed.cs" />
+    <Compile Include="Objects\TwitterSearch.cs" />
     <Compile Include="Objects\XboxLive.cs" />
     <Compile Include="Pipe.cs" />
     <Compile Include="Runnables\ActionRunnable.cs" />
@@ -251,6 +243,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -18,7 +18,7 @@ namespace Jarvis.Objects.Reference
             Images = new List<string>();
             foreach (XmlNode node in doc.SelectNodes("//pod/subpod/img"))
             {
-                Images.Add(node.Attributes["img"].Value);
+                Images.Add(node.Attributes["src"].Value);
             }
         }
 

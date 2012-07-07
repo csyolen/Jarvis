@@ -8,35 +8,25 @@ using System.Timers;
 using Jarvis.Objects;
 using Jarvis.Runnables;
 using Newtonsoft.Json.Linq;
-using Twitterizer;
 
 namespace Jarvis.Tickers
 {
     class TwitterTicker : TickerBase
     {
-        private readonly string _api;
 
         public TwitterTicker() : base(60000)
         {
-            _api = "http://search.twitter.com/search.json?include_entities=true&q=";
-            foreach (var twitter in Brain.Settings.Twitters)
-            {
-                _api += "from%3a{0}+OR+".Template(twitter);
-            }
         }
 
         protected override void Tick()
         {
-            IEnumerable<Tweet> json;
-            try {json = JToken.Parse(new BrowserClient().DownloadString(_api))["results"]
-                .Select(o => new Tweet(o));}
-            catch { return;}
             var last = DateTime.Now.Subtract(1.Minutes());
-            foreach (var tweet in json.Where(o => o.Time.IsFuture(last)))
+            var tweets = TwitterSearch.FromUsers(Brain.Settings.Twitters.ToArray());
+            foreach (var tweet in tweets.Results.Where(o => o.Time.IsFuture(last)))
             {
                 Brain.ListenerManager.CurrentListener.Output(tweet.Text);
-                if(tweet.Urls.Count > 0)
-                    Brain.RunnableManager.Runnable = new ProcessRunnable(tweet.Urls[0]);
+                if(tweet.Entities.TwitterEntityUrls.Any())
+                    Brain.RunnableManager.Runnable = new ProcessRunnable(tweet.Entities.TwitterEntityUrls.First().Url);
             }
             
         }
