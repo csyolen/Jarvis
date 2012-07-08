@@ -1,0 +1,9 @@
+﻿<Views:Fadeable x:Class="Jarvis.Views.TweetView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Views="clr-namespace:Jarvis.Views"
+              Title="ImageView" Topmost="True" Width="230" AllowsTransparency="True" ShowInTaskbar="False" WindowStyle="None" SizeToContent="Height">
+    <StackPanel>
+        <TextBlock Name="Text" Text="Experience more with uashduih asuidhasiud hasdui hasd" TextWrapping="Wrap" Foreground="#FF747474" FontSize="16" Margin="20,10" FontFamily="Segoe UI Semibold" />
+        <TextBlock Name="Author" Text="@CnnBrk" TextWrapping="Wrap" Foreground="#FF00bfff" FontSize="12" Margin="20,-10,20,10" FontFamily="Segoe UI Semibold" />
+    </StackPanel>
+</Views:Fadeable>

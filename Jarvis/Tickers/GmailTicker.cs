@@ -23,7 +23,8 @@ namespace Jarvis.Tickers
 
         protected override void Tick()
         {
-            foreach (var account in Brain.Settings.Accounts)
+            return;
+            foreach (var account in Brain.Settings.EmailAccounts)
             {
                 var doc = GetAtom(account.Email, account.Password);
                 var last = DateTime.Now.Subtract(1.Minutes());

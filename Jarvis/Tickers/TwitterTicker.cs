@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using Jarvis.Objects;
 using Jarvis.Runnables;
+using Jarvis.Views;
 using Newtonsoft.Json.Linq;
 
 namespace Jarvis.Tickers
@@ -24,9 +25,16 @@ namespace Jarvis.Tickers
             var tweets = TwitterSearch.FromUsers(Brain.Settings.Twitters.ToArray());
             foreach (var tweet in tweets.Results.Where(o => o.Time > last))
             {
-                Brain.ListenerManager.CurrentListener.Output("{0}: {1}".Template(tweet.From_user_name, tweet.Text));
-                if(tweet.Entities != null && tweet.Entities.TwitterEntityUrls != null)
+                if (tweet.Entities != null && tweet.Entities.TwitterEntityUrls != null)
+                {
                     Brain.RunnableManager.Runnable = new ProcessRunnable(tweet.Entities.TwitterEntityUrls.First().Url);
+                    foreach (var twitterEntityUrl in tweet.Entities.TwitterEntityUrls)
+                    {
+                        tweet.Text = tweet.Text.Replace(twitterEntityUrl.Url, "");
+                    }
+                }
+                TweetView.Create(tweet.Text, tweet.From_user); 
+                Brain.ListenerManager.CurrentListener.Output("{0}: {1}".Template(tweet.From_user_name, tweet.Text));
             }
             
         }

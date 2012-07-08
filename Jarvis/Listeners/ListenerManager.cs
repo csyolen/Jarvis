@@ -22,6 +22,13 @@ namespace Jarvis.Listeners
             new TLListener(pipe).Start();
             new SocketListener(pipe).Start();
 
+            //Email
+
+            foreach (var account in Brain.Settings.EmailAccounts)
+            {
+                new ImapListener(pipe, account).Start();
+            }
+
             CurrentListener = IRC;
         }
 

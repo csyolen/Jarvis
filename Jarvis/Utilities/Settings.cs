@@ -20,10 +20,10 @@ namespace Jarvis.Utilities
             Videos = _json["Videos"].Select(o => new DirectoryInfo(o.ToString())).ToList();
 
             //Emails
-            Accounts = new List<EmailAccount>();
+            EmailAccounts = new List<EmailAccount>();
             foreach (var account in _json["Emails"])
             {
-                Accounts.Add(new EmailAccount(account["Email"].ToString(), account["Password"].ToString()));
+                EmailAccounts.Add(new EmailAccount(account["Email"].ToString(), account["Password"].ToString()));
             }
 
             //Alarms
@@ -34,7 +34,7 @@ namespace Jarvis.Utilities
 
         public List<string> Twitters { get; private set; }
         public List<DirectoryInfo> Videos { get; private set; }
-        public List<EmailAccount> Accounts { get; private set; }
+        public List<EmailAccount> EmailAccounts { get; private set; }
         public TimeSpan Wake { get; private set; }
         public TimeSpan Sleep { get; private set; }
     }
