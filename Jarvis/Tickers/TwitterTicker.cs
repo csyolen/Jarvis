@@ -25,10 +25,10 @@ namespace Jarvis.Tickers
             var tweets = TwitterSearch.FromUsers(Brain.Settings.Twitters.ToArray());
             foreach (var tweet in tweets.Results.Where(o => o.Time > last))
             {
-                if (tweet.Entities != null && tweet.Entities.TwitterEntityUrls != null)
+                if (tweet.Entities.Urls.Count() > 0)
                 {
-                    Brain.RunnableManager.Runnable = new ProcessRunnable(tweet.Entities.TwitterEntityUrls.First().Url);
-                    foreach (var twitterEntityUrl in tweet.Entities.TwitterEntityUrls)
+                    Brain.RunnableManager.Runnable = new ProcessRunnable(tweet.Entities.Urls.First().Url);
+                    foreach (var twitterEntityUrl in tweet.Entities.Urls)
                     {
                         tweet.Text = tweet.Text.Replace(twitterEntityUrl.Url, "");
                     }

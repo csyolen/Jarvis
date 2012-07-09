@@ -88,7 +88,7 @@ namespace Jarvis
     {
 
         public object[] Hashtags;
-        public TwitterEntityUrl[] TwitterEntityUrls;
+        public TwitterEntityUrl[] Urls;
         public User_mentions[] User_mentions;
 
         //Empty Constructor

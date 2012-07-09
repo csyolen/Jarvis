@@ -21,23 +21,30 @@ namespace Jarvis.Listeners
 
         public override void Loop()
         {
-            using (Imap client = new Imap())
+            while (true)
             {
-                client.ConnectSSL("imap.gmail.com");
-                client.Login(_account.Email, _account.Password);
-                client.SelectInbox();
-                
-                while (true)
+                try
                 {
-                    FolderStatus currentStatus = client.Idle();
-                    foreach (long uid in client.SearchFlag(Flag.Unseen))
+                    using (Imap client = new Imap())
                     {
-                        IMail email = new MailBuilder().CreateFromEml(
-                            client.GetHeadersByUID(uid));
-                       Output(Speech.Email.Parse(email.From[0].Name, email.Subject));
+                        client.ConnectSSL("imap.gmail.com");
+                        client.Login(_account.Email, _account.Password);
+                        client.SelectInbox();
+
+                        while (true)
+                        {
+                            FolderStatus currentStatus = client.Idle();
+                            foreach (long uid in client.SearchFlag(Flag.Unseen))
+                            {
+                                IMail email = new MailBuilder().CreateFromEml(
+                                    client.GetHeadersByUID(uid));
+                                Output(Speech.Email.Parse(email.From[0].Name, email.Subject));
+                            }
+                        }
+                        client.Close();
                     }
                 }
-                client.Close();
+                catch {}
             }
         }
 

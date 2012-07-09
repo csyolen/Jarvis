@@ -12,13 +12,13 @@ namespace Jarvis.Views
     {
         public Fadeable()
         {
-            this.Left = SystemParameters.PrimaryScreenWidth - 230 - 10;
             this.Top = FadeableManager.AddFadeable(this);
             this.MouseLeftButtonUp += (sender, args) => this.FadeOut();
         }
 
         public void FadeIn()
         {
+            this.Left = SystemParameters.PrimaryScreenWidth - this.Width - 10;
             Opacity = 0;
             this.Show();
             var da = new DoubleAnimation(0, 1.0, 300.Milliseconds());

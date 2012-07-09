@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jarvis.Objects;
+using Jarvis.Views;
 
 namespace Jarvis.Tickers
 {
@@ -32,6 +33,7 @@ namespace Jarvis.Tickers
                 if(source.New.IsOnline && source.Old.Presence != source.New.Presence)
                 {
                     Brain.ListenerManager.CurrentListener.Output(source.New.Description);
+                    ImageView.Create(source.New.LargeGamerTileUrl);
                 }
             }
             _old = xbox;
