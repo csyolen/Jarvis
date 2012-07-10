@@ -38,9 +38,12 @@ namespace Jarvis.Listeners
         {
             if(!Brain.Awake)
                 return;
+            /*
             if(_current != null)
                 _synthesizer.SpeakAsyncCancel(_current);
             _current = _synthesizer.SpeakAsync(output);
-        }
+            */
+            _synthesizer.Speak(output);
+         }
     }
 }

@@ -17,7 +17,7 @@ namespace TLBot
         static Announce()
         {
             _wc = new WebClient();
-            _wc.Headers[HttpRequestHeader.Cookie] = "member_id=53563; tluid=522483; tlpass=997ac112d4b8787eaadff2326ff8fad12eac71b4;";
+            _wc.Headers[HttpRequestHeader.Cookie] = "member_id=53563; tluid=522483; pass_hash=ef5be2fa3121fe9947bbbf247bddbc99;";
         }
 
         public Announce(string input)

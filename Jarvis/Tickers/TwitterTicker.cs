@@ -14,16 +14,19 @@ namespace Jarvis.Tickers
 {
     class TwitterTicker : TickerBase
     {
+        private string _since;
 
         public TwitterTicker() : base(60000)
         {
+            var tweets = TwitterSearch.FromUsers("0", Brain.Settings.Twitters.ToArray());
+            _since = tweets.Max_id_str;
         }
 
         protected override void Tick()
         {
-            var last = DateTime.Now.Subtract(1.Minutes());
-            var tweets = TwitterSearch.FromUsers(Brain.Settings.Twitters.ToArray());
-            foreach (var tweet in tweets.Results.Where(o => o.Time > last))
+            var tweets = TwitterSearch.FromUsers(_since, Brain.Settings.Twitters.ToArray());
+            _since = tweets.Max_id_str;
+            foreach (var tweet in tweets.Results)
             {
                 if (tweet.Entities.Urls.Count() > 0)
                 {

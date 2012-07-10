@@ -24,7 +24,7 @@ namespace Jarvis
         public string Refresh_url;
         public Result[] Results;
         public int Results_per_page;
-        public int Since_id;
+        public long Since_id;
         public string Since_id_str;
 
         //Empty Constructor
@@ -39,13 +39,15 @@ namespace Jarvis
             return JsonConvert.DeserializeObject<TwitterSearch>(json);
         }
 
-        public static TwitterSearch FromUsers(params string[] users)
+        public static TwitterSearch FromUsers(string since = "0", params string[] users)
         {
             var url = "http://search.twitter.com/search.json?include_entities=true&q=";
             foreach (var twitter in users)
             {
                 url += "from%3a{0}+OR+".Template(twitter);
             }
+            url = url.Remove(url.Length - 4, 4);
+            url += "&since_id=" + since;
             var json = new BrowserClient().DownloadString(url);
             return FromJson(json);
         }
