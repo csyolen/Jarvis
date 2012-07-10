@@ -53,6 +53,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\libs\AIMLbot.dll</HintPath>
     </Reference>
+    <Reference Include="DateTimeEnglishParser">
+      <HintPath>..\..\..\libs\DateTimeEnglishParser.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\HtmlAgilityPack.1.4.3\lib\HtmlAgilityPack.dll</HintPath>

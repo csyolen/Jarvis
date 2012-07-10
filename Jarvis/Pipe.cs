@@ -35,7 +35,14 @@ namespace Jarvis
                 var match = input.RegexMatch(command.Regexes);
                 if(!match.Success)
                     continue;
-                listener.Output(command.Handle(input, match, listener));
+                try
+                {
+                    listener.Output(command.Handle(input, match, listener));
+                }
+                catch
+                {
+                    listener.Output("Error at " + command.GetType().Name);
+                }
             }
         }
     }

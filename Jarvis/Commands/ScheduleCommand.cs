@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using DateTimeParser;
 using Jarvis.Listeners;
 using Jarvis.Tickers;
 
@@ -10,16 +11,16 @@ namespace Jarvis.Commands
     {
         public string Handle(string input, Match match, IListener listener)
         {
-            var task = input.RegexMatch(@".*(?=at)").Value;
-            var time = input.RegexMatch(@"\d+:\d+").Value;
-            var dateTime = DateTime.ParseExact(time, "HH:mm", CultureInfo.CurrentCulture);
+            var task = match.Groups[1].Value;
+            var time = match.Groups[2].Value;
+            var dateTime = DateTimeEnglishParser.ParseRelative(DateTime.Now, time);
             ScheduleTicker.Instance.AddTask(dateTime,task);
-            return "Task scheduled.";
+            return "I will remind you to {0} on {1}".Template(task, dateTime.ToShortDateString());
         }
 
         public string Regexes
         {
-            get { return @"(at)[^\d+](\d+:\d+)"; }
+            get { return @"remind.+to(.+)on(.+)"; }
         }
     }
 }
