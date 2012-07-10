@@ -15,6 +15,7 @@ namespace Jarvis.Objects.Reference
 
         public Search(string query)
         {
+            /*
             var url = string.Format("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q={0}", query);
             var json = JToken.Parse(new BrowserClient().DownloadString(url));
             var results = json["responseData"]["results"].Select(o => new GoogleResult(o)).ToList();
@@ -35,6 +36,7 @@ namespace Jarvis.Objects.Reference
                 Description = results[0].ToString().StripHtml().RemoveExtraSpaces().Trim();
                 Link = results[0].Link;
             }
+             */
         }
 
     }

@@ -9,18 +9,18 @@ using Jarvis.Objects.Reference;
 
 namespace Jarvis.Commands
 {
-    class RatingCommand : ICommand
+    class ActorsCommand : ICommand
     {
         public string Handle(string input, Match match, IListener listener)
         {
-            var query = match.Groups[1].Value.Trim();
+            var query = match.Groups[2].Value;
             var imdb = IMDB.FromQuery(query);
-            var r = "{0} received a rating of {1}.".Template(imdb.Title, imdb.ImdbRating);
-            if (double.Parse(imdb.ImdbRating) > 6)
-                r += Environment.NewLine + "You should probably watch it.";
-            return r;
+            return "{0} were in {1}".Template(imdb.Actors, imdb.Title);
         }
 
-        public string Regexes { get { return "how was (.+)"; } }
+        public string Regexes
+        {
+            get { return "who(.+)in (.+)"; }
+        }
     }
 }

@@ -14,18 +14,13 @@ namespace Jarvis.Commands
     {
         public string Handle(string input, Match match, IListener listener)
         {
-            var query = match.Groups[1].Value;
-            var w = new Wolfram(query);
-            foreach (var image in w.Images)
-            {
-                ImageView.Create(image);
-            }
-            return "";
+            var w = new Wolfram(input);
+            return w.Result;
         }
 
         public string Regexes
         {
-            get { return "wolfram (.+)"; }
+            get { return "(what is|when|how many) (.+)"; }
         }
     }
 }

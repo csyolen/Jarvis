@@ -95,6 +95,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Brain.cs" />
+    <Compile Include="Commands\ActorsCommand.cs" />
     <Compile Include="Commands\AlarmCommand.cs" />
     <Compile Include="Commands\CloseCommand.cs" />
     <Compile Include="Commands\RatingCommand.cs" />

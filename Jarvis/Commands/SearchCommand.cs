@@ -15,9 +15,8 @@ namespace Jarvis.Commands
         public string Handle(string input, Match match, IListener listener)
         {
             var subject = match.Groups[1].Value.Trim();
-            var search = new Search(subject);
-            Brain.RunnableManager.Runnable = new ProcessRunnable(search.Link);
-            return search.Description;
+            var search = new Wolfram(subject);
+            return search.Result;
         }
 
         public string Regexes
