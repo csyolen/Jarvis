@@ -17,7 +17,7 @@ namespace Jarvis.Objects
 
         public List<RssItem> New(DateTime min)
         {
-            return Items.Where(o => o.PubDate.IsFuture(min)).ToList();
+            return Items.Where(o => o.PubDate > min).ToList();
         } 
 
         public RssFeed(string url)

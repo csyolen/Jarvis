@@ -11,10 +11,12 @@ namespace Jarvis.Views
     static class FadeableManager
     {
         private static readonly List<Fadeable> Fadeables;
+        private static readonly object LockObject;
 
         static FadeableManager()
         {
             Fadeables = new List<Fadeable>();
+            LockObject = new object();
         }
 
         public static double AddFadeable(Fadeable f)
@@ -28,14 +30,21 @@ namespace Jarvis.Views
 
         public static void RemoveFadeable(Fadeable f)
         {
-            var index = Fadeables.IndexOf(f);
-            var height = f.Height + 10;
-            Fadeables.Remove(f);
-            for (int i = index; i < Fadeables.Count; i++)
+            lock (LockObject)
             {
-                var fadeable = Fadeables[i];
-                var da = new DoubleAnimation(fadeable.Top, fadeable.Top - height, 150.Milliseconds());
-                fadeable.BeginAnimation(Window.TopProperty, da);
+                if (f == null)
+                    return;
+                var index = Fadeables.IndexOf(f);
+                if(index < 0)
+                    return;
+                var height = f.Height + 10;
+                Fadeables.Remove(f);
+                for (int i = index; i < Fadeables.Count; i++)
+                {
+                    var fadeable = Fadeables[i];
+                    var da = new DoubleAnimation(fadeable.Top, fadeable.Top - height, 150.Milliseconds());
+                    fadeable.BeginAnimation(Window.TopProperty, da);
+                }
             }
         }
     }

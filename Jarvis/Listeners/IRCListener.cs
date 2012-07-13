@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Meebey.SmartIrc4net;
 
 namespace Jarvis.Listeners
@@ -16,25 +17,34 @@ namespace Jarvis.Listeners
 
         public override void Loop()
         {
+            while (true)
+            {
+                try
+                {
+                    Setup();
+                    _client.Listen();
+
+                }
+                catch {}
+                Thread.Sleep(5.Seconds());
+            }
+        }
+
+        private void Setup()
+        {
+            if (_client != null)
+                _client.Disconnect();
+
             _client = new IrcClient {ChannelSyncing = true, SendDelay = 200, AutoRetry = true};
-            _client.OnChannelMessage += ChannelMessage;
-            _client.OnInvite += OnInvite;
+            _client.OnChannelMessage += ircdata => Handle(ircdata.Message); ;
+            _client.OnInvite += (inviter, channel, ircdata) => _client.Join(ircdata.Message);
+            //_client.OnDisconnected += Setup;
+
             _client.Connect("irc.freenode.net", 6667);
             _client.Login("[Jarvis]", "[Jarvis]");
             //_client.Join("#clossit");
             _client.Join("#jarvis");
-            _client.Listen();
-            Output("Jarvis is online.");
-        }
-
-        private void ChannelMessage(Data ircdata)
-        {
-            Handle(ircdata.Message);
-        }
-
-        private void OnInvite(string inviter, string channel, Data ircdata)
-        {
-            _client.Join(ircdata.Message);
+            
         }
 
         public override void Output(string output)

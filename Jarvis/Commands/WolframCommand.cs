@@ -23,7 +23,7 @@ namespace Jarvis.Commands
 
         public string Regexes
         {
-            get { return "(wolfram|what is|when|how many|how much) (.+)"; }
+            get { return "(wolfram|what is|when|how many|how much|how tall|how big) (.+)"; }
         }
     }
 }
