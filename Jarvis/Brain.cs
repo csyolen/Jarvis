@@ -65,6 +65,10 @@ namespace Jarvis
                 .Where(o => o.GetConstructors().Any(x => x.GetParameters().Length == 0))
                 .Select(source => (TickerBase) Activator.CreateInstance(source)).ToList()
                 .ForEach(o => o.Start());
+            foreach (var rss in Brain.Settings.RSS)
+            {
+                new RssTicker(rss).Start();
+            }
 
         }
 

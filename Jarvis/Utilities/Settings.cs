@@ -17,6 +17,7 @@ namespace Jarvis.Utilities
         {
             _json = JToken.Parse(File.ReadAllText(Constants.SettingsFile.FullName));
             Twitters = _json["Twitters"].Select(o => o.ToString()).ToList();
+            RSS = _json["RSS"].Select(o => o.ToString()).ToList();
             Videos = _json["Videos"].Select(o => new DirectoryInfo(o.ToString())).ToList();
 
             //Emails
@@ -33,6 +34,7 @@ namespace Jarvis.Utilities
         }
 
         public List<string> Twitters { get; private set; }
+        public List<string> RSS { get; private set; } 
         public List<DirectoryInfo> Videos { get; private set; }
         public List<EmailAccount> EmailAccounts { get; private set; }
         public TimeSpan Wake { get; private set; }
