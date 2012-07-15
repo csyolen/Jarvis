@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 namespace Jarvis.Utilities
@@ -31,10 +29,18 @@ namespace Jarvis.Utilities
             Wake = DateTime.ParseExact(_json["Wake"].ToString(), "HH:mm", CultureInfo.CurrentCulture).TimeOfDay;
             Sleep = DateTime.ParseExact(_json["Sleep"].ToString(), "HH:mm", CultureInfo.CurrentCulture).TimeOfDay;
 
+            //RegexFilters
+            RegexFilters = new List<Tuple<string, string>>();
+            foreach (string s in _json["RegexFilters"])
+            {
+                var splits = s.Split('=');
+                RegexFilters.Add(new Tuple<string, string>(splits[0], splits[1]));
+            }
         }
 
         public List<string> Twitters { get; private set; }
-        public List<string> RSS { get; private set; } 
+        public List<string> RSS { get; private set; }
+        public List<Tuple<string, string>>  RegexFilters { get; private set; }
         public List<DirectoryInfo> Videos { get; private set; }
         public List<EmailAccount> EmailAccounts { get; private set; }
         public TimeSpan Wake { get; private set; }
