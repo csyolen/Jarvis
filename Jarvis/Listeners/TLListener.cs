@@ -4,7 +4,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using Jarvis.Runnables;
 using Meebey.SmartIrc4net;
+using MonoTorrent.Client;
+using MonoTorrent.Common;
 using TLBot;
 
 namespace Jarvis.Listeners
@@ -14,6 +18,8 @@ namespace Jarvis.Listeners
         private static IrcClient _bot;
         private static HashSet<string> _shows;
         private static readonly FileInfo ShowsFile = new FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/TLBot/shows.txt");
+
+        private ClientEngine _engine;
 
         public TLListener(Pipe pipe)
             : base(pipe)
@@ -26,6 +32,8 @@ namespace Jarvis.Listeners
             }
 
             _shows = new HashSet<string>(File.ReadAllLines(ShowsFile.FullName).Where(o => o.Trim().Length > 0));
+
+            _engine = new ClientEngine(new EngineSettings());
         }
 
         public override void Loop()
@@ -53,9 +61,23 @@ namespace Jarvis.Listeners
         {
             var announce = new Announce(ircdata.Message);
 
-            if (announce.Category != "TV :: Episodes" || !_shows.Any(o => announce.Name.ToLower().Contains(o))) return;
-            announce.Download();
-            Output("Downloading " + announce.Name);
+            //if (announce.Category != "TV :: Episodes" || !_shows.Any(o => announce.Name.ToLower().Contains(o))) return;
+            new Thread(() =>
+                {
+                    var path = announce.Download();
+                    var torrent = Torrent.Load(path);
+                    var manager = new TorrentManager(torrent, @"C:/torrents/", new TorrentSettings());
+                    _engine.Register(manager);
+                    manager.TorrentStateChanged += (sender, args) =>
+                        {
+                            if (args.OldState != TorrentState.Downloading) return;
+                            Brain.RunnableManager.Runnable = new ProcessRunnable(args.TorrentManager.SavePath);
+                            Output("Finished downloading " + args.TorrentManager.Torrent.Name);
+                        };
+                    manager.Start();
+                    Output("Downloading " + announce.Name);
+
+                }).Start();
         }
 
         public override void RawOutput(string output)
