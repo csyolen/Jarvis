@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using WolframAlpha.WrapperCore;
 
 namespace Jarvis.Objects.Reference
 {
     class Wolfram
     {
+        private const string AppId = "2PWVJ9-9XEHHYT93V";
+
         public Wolfram(string query)
         {
             var url = "http://api.wolframalpha.com/v2/query?input={0}&appid=2PWVJ9-9XEHHYT93V".Template(query);
@@ -27,6 +30,13 @@ namespace Jarvis.Objects.Reference
             catch
             {
             }
+
+            var engine = new WolframAlphaEngine(AppId);
+            var result = engine.GetWolframAlphaQueryResult(engine.GetStringRequest(new WolframAlphaQuery()
+                {
+                    Query = query,
+                    APIKey = AppId
+                }));
         }
 
         public List<string> Images { get; private set; }
