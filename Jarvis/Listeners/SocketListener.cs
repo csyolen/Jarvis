@@ -30,7 +30,7 @@ namespace Jarvis.Listeners
             }
         }
 
-        public override void Output(string output)
+        public override void RawOutput(string output)
         {
             Brain.ListenerManager.CurrentListener.Output(output);
         }

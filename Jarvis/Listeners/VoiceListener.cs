@@ -34,7 +34,7 @@ namespace Jarvis.Listeners
         }
 
         private Prompt _current;
-        public override void Output(string output)
+        public override void RawOutput(string output)
         {
             if(!Brain.Awake)
                 return;

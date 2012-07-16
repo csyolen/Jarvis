@@ -38,9 +38,6 @@ namespace Jarvis
                 try
                 {
                     var output = command.Handle(input, match, listener);
-                    output = Brain.Settings.RegexFilters
-                        .Aggregate(output, (current, regex) => 
-                            current.RegexReplace(regex.Item1, regex.Item2));
                     listener.Output(output);
                 }
                 catch

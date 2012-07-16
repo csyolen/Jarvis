@@ -58,7 +58,7 @@ namespace Jarvis.Listeners
             Output("Downloading " + announce.Name);
         }
 
-        public override void Output(string output)
+        public override void RawOutput(string output)
         {
             Brain.ListenerManager.CurrentListener.Output(output);
         }

@@ -47,7 +47,7 @@ namespace Jarvis.Listeners
             
         }
 
-        public override void Output(string output)
+        public override void RawOutput(string output)
         {
             var lines = output.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
             foreach (var line in lines)

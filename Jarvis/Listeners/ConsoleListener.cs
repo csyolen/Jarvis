@@ -22,7 +22,7 @@ namespace Jarvis.Listeners
             }
         }
 
-        public override void Output(string output)
+        public override void RawOutput(string output)
         {
             Console.WriteLine("Jarvis: {0}", output);
         }

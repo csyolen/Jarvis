@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace Jarvis.Listeners
@@ -35,6 +36,13 @@ namespace Jarvis.Listeners
         }
 
         public abstract void Loop();
-        public abstract void Output(string output);
+        public void Output(string output)
+        {
+            output = Brain.Settings.RegexFilters
+                .Aggregate(output, (current, regex) =>
+                    Regex.Replace(current, regex.Item1, regex.Item2, RegexOptions.IgnoreCase));
+            RawOutput(output);
+        }
+        public abstract void RawOutput(string output);
     }
 }
