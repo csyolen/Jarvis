@@ -117,7 +117,7 @@ namespace Jarvis.Objects {
             get
             {
                 var p = char.ToLower(Presence[0]) + Presence.Substring(1);
-                return GamerTag.UppercaseFirst() + " is " + p + (RichPresence.IsBlank() ? "" : ": " + RichPresence); 
+                return GamerTag.UppercaseFirst() + " is " + p + (RichPresence.IsBlank() ? "" : ": " + RichPresence.RegexRemove("\r\n")); 
             }
         }
 

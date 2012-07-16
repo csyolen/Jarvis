@@ -43,7 +43,7 @@ namespace Jarvis.Listeners
                 _synthesizer.SpeakAsyncCancel(_current);
             _current = _synthesizer.SpeakAsync(output);
             */
-            _synthesizer.Speak(output);
+            _synthesizer.SpeakAsync(output);
          }
     }
 }
