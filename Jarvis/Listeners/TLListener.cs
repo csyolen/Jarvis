@@ -13,13 +13,14 @@ using TLBot;
 
 namespace Jarvis.Listeners
 {
-    class TLListener : ListenerBase
+    public class TLListener : ListenerBase
     {
         private static IrcClient _bot;
         private static HashSet<string> _shows;
         private static readonly FileInfo ShowsFile = new FileInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/TLBot/shows.txt");
 
-        private ClientEngine _engine;
+        public ClientEngine Engine { get; private set; }
+        public List<TorrentManager> Torrents { get; private set; } 
 
         public TLListener(Pipe pipe)
             : base(pipe)
@@ -33,7 +34,14 @@ namespace Jarvis.Listeners
 
             _shows = new HashSet<string>(File.ReadAllLines(ShowsFile.FullName).Where(o => o.Trim().Length > 0));
 
-            _engine = new ClientEngine(new EngineSettings());
+            Engine = new ClientEngine(new EngineSettings());
+            Torrents = new List<TorrentManager>();
+            Engine.TorrentRegistered += (sender, args) => Torrents.Add(args.TorrentManager);
+
+            foreach (var fileInfo in Constants.TorrentDirectory.GetFiles())
+            {
+                DownloadTorrent(fileInfo.FullName);
+            }
         }
 
         public override void Loop()
@@ -65,19 +73,25 @@ namespace Jarvis.Listeners
             new Thread(() =>
                 {
                     var path = announce.Download();
-                    var torrent = Torrent.Load(path);
-                    var manager = new TorrentManager(torrent, @"C:/torrents/", new TorrentSettings());
-                    _engine.Register(manager);
-                    manager.TorrentStateChanged += (sender, args) =>
-                        {
-                            if (args.OldState != TorrentState.Downloading) return;
-                            Brain.RunnableManager.Runnable = new ProcessRunnable(args.TorrentManager.SavePath);
-                            Output("Finished downloading " + args.TorrentManager.Torrent.Name);
-                        };
-                    manager.Start();
+                    DownloadTorrent(path);
                     Output("Downloading " + announce.Name);
 
                 }).Start();
+        }
+
+        private void DownloadTorrent(string path)
+        {
+            var torrent = Torrent.Load(path);
+            var manager = new TorrentManager(torrent, @"C:/torrents/", new TorrentSettings());
+            Engine.Register(manager);
+            manager.TorrentStateChanged += (sender, args) =>
+            {
+                if (args.OldState != TorrentState.Downloading) return;
+                Brain.RunnableManager.Runnable = new ProcessRunnable(args.TorrentManager.SavePath);
+                Output("Finished downloading " + args.TorrentManager.Torrent.Name);
+            };
+            manager.Start();
+            
         }
 
         public override void RawOutput(string output)

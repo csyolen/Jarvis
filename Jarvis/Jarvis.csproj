@@ -108,6 +108,7 @@
     <Compile Include="Commands\ReloadCommand.cs" />
     <Compile Include="Commands\RunnableCommand.cs" />
     <Compile Include="Commands\SayCommand.cs" />
+    <Compile Include="Commands\TorrentCommand.cs" />
     <Compile Include="Commands\VideoCommand.cs" />
     <Compile Include="Commands\WolframCommand.cs" />
     <Compile Include="Commands\XboxCommand.cs" />
