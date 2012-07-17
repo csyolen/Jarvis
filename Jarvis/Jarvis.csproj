@@ -116,6 +116,10 @@
     <Compile Include="Listeners\SocketListener.cs" />
     <Compile Include="Objects\Reference\Wolfram.cs" />
     <Compile Include="Objects\RssFeed.cs" />
+    <Compile Include="Objects\Torrents\FileTypes\IFileType.cs" />
+    <Compile Include="Objects\Torrents\FileTypes\RarFile.cs" />
+    <Compile Include="Objects\Torrents\FileTypes\VideoFile.cs" />
+    <Compile Include="Objects\Torrents\TorrentHandler.cs" />
     <Compile Include="Objects\TwitterSearch.cs" />
     <Compile Include="Objects\XboxLive.cs" />
     <Compile Include="Pipe.cs" />
@@ -133,6 +137,7 @@
     <Compile Include="Tickers\XboxTicker.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Settings.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Views\Fadeable.cs" />
     <Compile Include="Views\FadeableManager.cs" />
     <Compile Include="Views\ImageView.xaml.cs">
@@ -184,7 +189,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Objects\Announce.cs" />
+    <Compile Include="Objects\Torrents\Announce.cs" />
     <Compile Include="Objects\BrowserClient.cs">
       <SubType>Component</SubType>
     </Compile>

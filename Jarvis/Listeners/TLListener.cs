@@ -5,11 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Jarvis.Objects.Torrents;
 using Jarvis.Runnables;
+using Jarvis.Utilities;
 using Meebey.SmartIrc4net;
 using MonoTorrent.Client;
 using MonoTorrent.Common;
-using TLBot;
 
 namespace Jarvis.Listeners
 {
@@ -68,13 +69,13 @@ namespace Jarvis.Listeners
         private void ChannelMessage(Data ircdata)
         {
             var announce = new Announce(ircdata.Message);
+            if (announce.Category != "TV :: Episodes" || !_shows.Any(o => announce.Name.ToLower().Contains(o))) return;
 
-            //if (announce.Category != "TV :: Episodes" || !_shows.Any(o => announce.Name.ToLower().Contains(o))) return;
             new Thread(() =>
                 {
                     var path = announce.Download();
                     DownloadTorrent(path);
-                    Output("Downloading " + announce.Name);
+                    Output("Downloading " + announce.Name.TorrentName());
 
                 }).Start();
         }
@@ -88,7 +89,8 @@ namespace Jarvis.Listeners
             {
                 if (args.OldState != TorrentState.Downloading) return;
                 Brain.RunnableManager.Runnable = new ProcessRunnable(args.TorrentManager.SavePath);
-                Output("Finished downloading " + args.TorrentManager.Torrent.Name);
+                Output("Finished downloading " + args.TorrentManager.Torrent.Name.TorrentName());
+                new TorrentHandler(args.TorrentManager).Handle();
             };
             manager.Start();
             

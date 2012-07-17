@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Jarvis.Listeners;
+using Jarvis.Utilities;
 
 namespace Jarvis.Commands
 {
@@ -15,7 +16,7 @@ namespace Jarvis.Commands
             var r = "";
             foreach (var torrent in Brain.ListenerManager.TorrentLeech.Torrents)
             {
-                r += "{0} is {1}, {2}% done\r\n".Template(torrent.Torrent.Name, torrent.State.ToString().ToLower(), Math.Floor(torrent.Progress));
+                r += "{0} is {1}, {2}% done\r\n".Template(torrent.Torrent.Name.TorrentName(), torrent.State.ToString().ToLower(), Math.Floor(torrent.Progress));
             }
             return r;
         }

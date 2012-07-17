@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
-using Jarvis;
-using Jarvis.Objects;
 
-namespace TLBot
+namespace Jarvis.Objects.Torrents
 {
-    class Announce
+    public class Announce
     {
         private static WebClient _wc;
 

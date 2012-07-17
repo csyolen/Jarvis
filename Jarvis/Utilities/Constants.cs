@@ -8,6 +8,16 @@ namespace Jarvis
 {
     static class Constants
     {
+        public static DirectoryInfo TmpDirectory
+        {
+            get
+            {
+                var path = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Jarvis\tmp");
+                if (!path.Exists)
+                    path.Create();
+                return path;
+            }
+        }
         public static DirectoryInfo ConfigDirectory
         {
             get
@@ -23,7 +33,7 @@ namespace Jarvis
         {
             get
             {
-                var path = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Jarvis\Torrents");
+                var path = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Jarvis\torrents");
                 if (!path.Exists)
                     path.Create();
                 return path;
