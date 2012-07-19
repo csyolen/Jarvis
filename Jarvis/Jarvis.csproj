@@ -49,6 +49,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AE.Net.Mail">
+      <HintPath>..\..\..\forks\aenetmail\bin\Debug\AE.Net.Mail.dll</HintPath>
+    </Reference>
     <Reference Include="AIMLbot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\libs\AIMLbot.dll</HintPath>
@@ -60,9 +63,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\HtmlAgilityPack.1.4.3\lib\HtmlAgilityPack.dll</HintPath>
     </Reference>
-    <Reference Include="Mail">
-      <HintPath>..\packages\Mail.dll.3.0.12126.2100\lib\Mail.dll</HintPath>
-    </Reference>
     <Reference Include="Meebey.SmartIrc4net, Version=0.2.0.29107, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\libs\Meebey.SmartIrc4net.dll</HintPath>
@@ -72,6 +72,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\twitterizer.2.4.1.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="parsedatetime.dll">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\IronPython 2.7\Tools\Scripts\parsedatetime.dll.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -104,6 +107,7 @@
     <Compile Include="Commands\ActorsCommand.cs" />
     <Compile Include="Commands\AlarmCommand.cs" />
     <Compile Include="Commands\CloseCommand.cs" />
+    <Compile Include="Commands\NetflixCommand.cs" />
     <Compile Include="Commands\RatingCommand.cs" />
     <Compile Include="Commands\ReloadCommand.cs" />
     <Compile Include="Commands\RunnableCommand.cs" />
@@ -114,6 +118,7 @@
     <Compile Include="Commands\XboxCommand.cs" />
     <Compile Include="Listeners\ImapListener.cs" />
     <Compile Include="Listeners\SocketListener.cs" />
+    <Compile Include="Objects\Reference\Google.cs" />
     <Compile Include="Objects\Reference\Wolfram.cs" />
     <Compile Include="Objects\RssFeed.cs" />
     <Compile Include="Objects\Torrents\FileTypes\IFileType.cs" />
@@ -138,6 +143,9 @@
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
+    <Compile Include="Views\BrowserView.xaml.cs">
+      <DependentUpon>BrowserView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Fadeable.cs" />
     <Compile Include="Views\FadeableManager.cs" />
     <Compile Include="Views\ImageView.xaml.cs">
@@ -171,6 +179,10 @@
     <Compile Include="Views\WeatherView.xaml.cs">
       <DependentUpon>WeatherView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\BrowserView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ImageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -194,7 +206,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Objects\Reference\Search.cs" />
-    <Compile Include="Objects\Reference\GoogleResult.cs" />
     <Compile Include="Objects\Reference\IMDB.cs" />
     <Compile Include="Objects\Reference\Weather.cs" />
     <Compile Include="Objects\Reference\Wikipedia.cs" />

@@ -22,7 +22,7 @@ namespace Jarvis.Listeners
             TorrentLeech = new TLListener(pipe);
             TorrentLeech.Start();
 
-            new SocketListener(pipe).Start();
+            //new SocketListener(pipe).Start();
 
             //Email
 

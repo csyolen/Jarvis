@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 
 namespace Jarvis.Views
@@ -14,6 +15,7 @@ namespace Jarvis.Views
         {
             this.Top = FadeableManager.AddFadeable(this);
             this.MouseLeftButtonUp += (sender, args) => this.FadeOut();
+            this.Cursor = Cursors.Hand;
         }
 
         public void FadeIn()

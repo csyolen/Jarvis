@@ -14,14 +14,15 @@ namespace Jarvis.Commands
     {
         public string Handle(string input, Match match, IListener listener)
         {
-            var subject = match.Groups[1].Value.Trim();
-            var search = new Wolfram(subject);
-            return search.Result;
+            var subject = match.Groups[1].Value;
+            var search = new Search(subject);
+            Brain.RunnableManager.Runnable = new ProcessRunnable(search.Link);
+            return search.Description;
         }
 
         public string Regexes
         {
-            get { return "search(.+)"; }
+            get { return "search (.+)"; }
         }
     }
 }

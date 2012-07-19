@@ -13,7 +13,7 @@ namespace Jarvis.Commands
 
         public string Regexes
         {
-            get { return @"\bmore\b|\brun\b|\bopen\b"; }
+            get { return @"\b(more|run|open)\s*(.*)"; }
         }
     }
 }

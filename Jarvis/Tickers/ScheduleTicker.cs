@@ -12,7 +12,7 @@ namespace Jarvis.Tickers
     class ScheduleTicker : TickerBase
     {
         private string _path = Constants.ConfigDirectory.FullName + "/schedule.txt";
-        public ScheduleTicker() : base(60000)
+        public ScheduleTicker() : base(1000)
         {
             Tasks = new HashSet<ScheduledTask>();
             Instance = this;

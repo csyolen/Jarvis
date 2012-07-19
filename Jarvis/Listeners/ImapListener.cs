@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AE.Net.Mail;
 using Jarvis.Locale;
 using Jarvis.Utilities;
-using Limilabs.Client.IMAP;
-using Limilabs.Mail;
 
 namespace Jarvis.Listeners
 {
@@ -21,31 +21,21 @@ namespace Jarvis.Listeners
 
         public override void Loop()
         {
-            while (true)
-            {
-                try
+            return;
+            var client = new ImapClient();
+            client.Connect("imap.gmail.com", 993, true, false);
+            client.Login(_account.Email, _account.Password);
+            var inbox = client.SelectMailbox("INBOX");
+            client.SuscribeMailbox("INBOX");
+            client.NewMessage += (sender, args) =>
                 {
-                    using (Imap client = new Imap())
+                    var i = args.MessageCount;
+                    var msgs = client.GetMessages(0, 1000);
+                    foreach (var message in msgs)
                     {
-                        client.ConnectSSL("imap.gmail.com");
-                        client.Login(_account.Email, _account.Password);
-                        client.SelectInbox();
-
-                        while (true)
-                        {
-                            FolderStatus currentStatus = client.Idle();
-                            foreach (long uid in client.SearchFlag(Flag.Unseen))
-                            {
-                                IMail email = new MailBuilder().CreateFromEml(
-                                    client.GetHeadersByUID(uid));
-                                Output(Speech.Email.Parse(email.From[0].Name, email.Subject));
-                            }
-                        }
-                        client.Close();
+                        Output(Speech.Email.Parse(message.From.DisplayName, message.Subject));
                     }
-                }
-                catch {}
-            }
+                };
         }
 
         public override void RawOutput(string output)

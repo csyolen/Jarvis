@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using DateTimeParser;
 using Jarvis.Listeners;
 using Jarvis.Tickers;
+using Jarvis.Utilities;
 
 namespace Jarvis.Commands
 {
@@ -13,14 +14,14 @@ namespace Jarvis.Commands
         {
             var task = match.Groups[1].Value;
             var time = match.Groups[2].Value;
-            var dateTime = DateTimeEnglishParser.ParseRelative(DateTime.Now, time);
+            var dateTime = time.ParseNaturalDateTime();
             ScheduleTicker.Instance.AddTask(dateTime,task);
-            return "I will remind you to {0} on {1}".Template(task, dateTime.ToShortDateString());
+            return "I will remind you to {0} {1}".Template(task, time);
         }
 
         public string Regexes
         {
-            get { return @"remind.+to(.+)on(.+)"; }
+            get { return @"remind.+to (.+) (tomorrow|in .+)"; }
         }
     }
 }
