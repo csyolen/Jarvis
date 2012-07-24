@@ -10,15 +10,16 @@ namespace Jarvis.Utilities
     {
         public static string TorrentName(this string name)
         {
-            var input = name.Substring(0, name.LastIndexOf('.'));
+            var input = name;
             var splits = input.RegexSplit(@"[\.\s]");
             var output = "";
             foreach (var split in splits)
             {
-                if (split.ToLower().IsRegexMatch(@"(-|dvdrip|720p|internal|x264|hdtv|\d\d\d\d)")) break;
+                if (split.ToLower().IsRegexMatch(@"(-|dvdrip|720p|internal|x264|hdtv)")) break;
                 output += split.UppercaseFirst() + " ";
             }
-            output = output.Trim();
+            output = output.RegexRemove(@"\d\d\d\d \d\d \d\d");
+            output = output.RemoveExtraSpaces();
             return output;
         }
 
