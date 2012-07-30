@@ -36,7 +36,7 @@ namespace Jarvis.Commands
             var interpretation = interpretationPod.SubPods[0].PodText.Replace(" |", "'s").UppercaseFirst();
             var answer = answerPod.SubPods[0].PodText.RemoveExtraSpaces().Trim();
 
-            return "{0} is {1}".Template(interpretation, answer);
+            return ("{0} is {1}".Template(interpretation, answer)).Replace("\n", " ");
         }
 
         public string Regexes
