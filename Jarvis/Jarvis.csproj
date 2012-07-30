@@ -63,18 +63,23 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\HtmlAgilityPack.1.4.3\lib\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\IronPython 2.7\Tools\Scripts\IronPython.dll</HintPath>
+    </Reference>
     <Reference Include="Meebey.SmartIrc4net, Version=0.2.0.29107, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\libs\Meebey.SmartIrc4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\IronPython.2.7.3\lib\Net40\Microsoft.Scripting.dll</HintPath>
     </Reference>
     <Reference Include="MonoTorrent">
       <HintPath>..\packages\MonoTorrent.0.9.0\lib\net20\MonoTorrent.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\twitterizer.2.4.1.1\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="parsedatetime.dll">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\IronPython 2.7\Tools\Scripts\parsedatetime.dll.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -141,6 +146,7 @@
     <Compile Include="Tickers\TwitterTicker.cs" />
     <Compile Include="Tickers\XboxTicker.cs" />
     <Compile Include="Utilities\Constants.cs" />
+    <Compile Include="Utilities\RelativeDateParser.cs" />
     <Compile Include="Utilities\Settings.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Views\BrowserView.xaml.cs">
@@ -235,6 +241,149 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Python\lib\abc.py" />
+    <None Include="Python\lib\calendar.py" />
+    <None Include="Python\lib\codecs.py" />
+    <None Include="Python\lib\encodings\aliases.py" />
+    <None Include="Python\lib\encodings\ascii.py" />
+    <None Include="Python\lib\encodings\base64_codec.py" />
+    <None Include="Python\lib\encodings\charmap.py" />
+    <None Include="Python\lib\encodings\cp037.py" />
+    <None Include="Python\lib\encodings\cp1006.py" />
+    <None Include="Python\lib\encodings\cp1026.py" />
+    <None Include="Python\lib\encodings\cp1140.py" />
+    <None Include="Python\lib\encodings\cp1250.py" />
+    <None Include="Python\lib\encodings\cp1251.py" />
+    <None Include="Python\lib\encodings\cp1252.py" />
+    <None Include="Python\lib\encodings\cp1253.py" />
+    <None Include="Python\lib\encodings\cp1254.py" />
+    <None Include="Python\lib\encodings\cp1255.py" />
+    <None Include="Python\lib\encodings\cp1256.py" />
+    <None Include="Python\lib\encodings\cp1257.py" />
+    <None Include="Python\lib\encodings\cp1258.py" />
+    <None Include="Python\lib\encodings\cp424.py" />
+    <None Include="Python\lib\encodings\cp437.py" />
+    <None Include="Python\lib\encodings\cp500.py" />
+    <None Include="Python\lib\encodings\cp720.py" />
+    <None Include="Python\lib\encodings\cp737.py" />
+    <None Include="Python\lib\encodings\cp775.py" />
+    <None Include="Python\lib\encodings\cp850.py" />
+    <None Include="Python\lib\encodings\cp852.py" />
+    <None Include="Python\lib\encodings\cp855.py" />
+    <None Include="Python\lib\encodings\cp856.py" />
+    <None Include="Python\lib\encodings\cp857.py" />
+    <None Include="Python\lib\encodings\cp858.py" />
+    <None Include="Python\lib\encodings\cp860.py" />
+    <None Include="Python\lib\encodings\cp861.py" />
+    <None Include="Python\lib\encodings\cp862.py" />
+    <None Include="Python\lib\encodings\cp863.py" />
+    <None Include="Python\lib\encodings\cp864.py" />
+    <None Include="Python\lib\encodings\cp865.py" />
+    <None Include="Python\lib\encodings\cp866.py" />
+    <None Include="Python\lib\encodings\cp869.py" />
+    <None Include="Python\lib\encodings\cp874.py" />
+    <None Include="Python\lib\encodings\cp875.py" />
+    <None Include="Python\lib\encodings\hex_codec.py" />
+    <None Include="Python\lib\encodings\hp_roman8.py" />
+    <None Include="Python\lib\encodings\iso8859_1.py" />
+    <None Include="Python\lib\encodings\iso8859_10.py" />
+    <None Include="Python\lib\encodings\iso8859_11.py" />
+    <None Include="Python\lib\encodings\iso8859_13.py" />
+    <None Include="Python\lib\encodings\iso8859_14.py" />
+    <None Include="Python\lib\encodings\iso8859_15.py" />
+    <None Include="Python\lib\encodings\iso8859_16.py" />
+    <None Include="Python\lib\encodings\iso8859_2.py" />
+    <None Include="Python\lib\encodings\iso8859_3.py" />
+    <None Include="Python\lib\encodings\iso8859_4.py" />
+    <None Include="Python\lib\encodings\iso8859_5.py" />
+    <None Include="Python\lib\encodings\iso8859_6.py" />
+    <None Include="Python\lib\encodings\iso8859_7.py" />
+    <None Include="Python\lib\encodings\iso8859_8.py" />
+    <None Include="Python\lib\encodings\iso8859_9.py" />
+    <None Include="Python\lib\encodings\koi8_r.py" />
+    <None Include="Python\lib\encodings\koi8_u.py" />
+    <None Include="Python\lib\encodings\latin_1.py" />
+    <None Include="Python\lib\encodings\mac_arabic.py" />
+    <None Include="Python\lib\encodings\mac_centeuro.py" />
+    <None Include="Python\lib\encodings\mac_croatian.py" />
+    <None Include="Python\lib\encodings\mac_cyrillic.py" />
+    <None Include="Python\lib\encodings\mac_farsi.py" />
+    <None Include="Python\lib\encodings\mac_greek.py" />
+    <None Include="Python\lib\encodings\mac_iceland.py" />
+    <None Include="Python\lib\encodings\mac_latin2.py" />
+    <None Include="Python\lib\encodings\mac_roman.py" />
+    <None Include="Python\lib\encodings\mac_romanian.py" />
+    <None Include="Python\lib\encodings\mac_turkish.py" />
+    <None Include="Python\lib\encodings\mbcs.py" />
+    <None Include="Python\lib\encodings\palmos.py" />
+    <None Include="Python\lib\encodings\ptcp154.py" />
+    <None Include="Python\lib\encodings\punycode.py" />
+    <None Include="Python\lib\encodings\quopri_codec.py" />
+    <None Include="Python\lib\encodings\raw_unicode_escape.py" />
+    <None Include="Python\lib\encodings\rot_13.py" />
+    <None Include="Python\lib\encodings\string_escape.py" />
+    <None Include="Python\lib\encodings\tis_620.py" />
+    <None Include="Python\lib\encodings\undefined.py" />
+    <None Include="Python\lib\encodings\unicode_escape.py" />
+    <None Include="Python\lib\encodings\unicode_internal.py" />
+    <None Include="Python\lib\encodings\utf_16.py" />
+    <None Include="Python\lib\encodings\utf_16_be.py" />
+    <None Include="Python\lib\encodings\utf_16_le.py" />
+    <None Include="Python\lib\encodings\utf_32.py" />
+    <None Include="Python\lib\encodings\utf_32_le.py" />
+    <None Include="Python\lib\encodings\utf_7.py" />
+    <None Include="Python\lib\encodings\utf_8.py" />
+    <None Include="Python\lib\encodings\utf_8_sig.py" />
+    <None Include="Python\lib\encodings\uu_codec.py" />
+    <None Include="Python\lib\encodings\zlib_codec.py" />
+    <None Include="Python\lib\encodings\__init__.py" />
+    <None Include="Python\lib\functools.py" />
+    <None Include="Python\lib\genericpath.py" />
+    <None Include="Python\lib\linecache.py" />
+    <None Include="Python\lib\locale.py" />
+    <None Include="Python\lib\ntpath.py" />
+    <None Include="Python\lib\os.py" />
+    <None Include="Python\lib\rfc822.py" />
+    <None Include="Python\lib\stat.py" />
+    <None Include="Python\lib\types.py" />
+    <None Include="Python\lib\UserDict.py" />
+    <None Include="Python\lib\warnings.py" />
+    <None Include="Python\lib\_abcoll.py" />
+    <None Include="Python\lib\_weakrefset.py" />
+    <None Include="Python\parsedatetime\._parsedatetime.py" />
+    <None Include="Python\parsedatetime\._parsedatetime_consts.py" />
+    <None Include="Python\parsedatetime\._t2.py" />
+    <None Include="Python\parsedatetime\.___init__.py" />
+    <None Include="Python\parsedatetime\parsedatetime.py" />
+    <None Include="Python\parsedatetime\parsedatetime_consts.py" />
+    <None Include="Python\parsedatetime\t2.py" />
+    <None Include="Python\parsedatetime\tests\._TestAustralianLocale.py" />
+    <None Include="Python\parsedatetime\tests\._TestComplexDateTimes.py" />
+    <None Include="Python\parsedatetime\tests\._TestErrors.py" />
+    <None Include="Python\parsedatetime\tests\._TestFrenchLocale.py" />
+    <None Include="Python\parsedatetime\tests\._TestGermanLocale.py" />
+    <None Include="Python\parsedatetime\tests\._TestInc.py" />
+    <None Include="Python\parsedatetime\tests\._TestMultiple.py" />
+    <None Include="Python\parsedatetime\tests\._TestPhrases.py" />
+    <None Include="Python\parsedatetime\tests\._TestRanges.py" />
+    <None Include="Python\parsedatetime\tests\._TestSimpleDateTimes.py" />
+    <None Include="Python\parsedatetime\tests\._TestSimpleOffsets.py" />
+    <None Include="Python\parsedatetime\tests\._TestUnits.py" />
+    <None Include="Python\parsedatetime\tests\.___init__.py" />
+    <None Include="Python\parsedatetime\tests\TestAustralianLocale.py" />
+    <None Include="Python\parsedatetime\tests\TestComplexDateTimes.py" />
+    <None Include="Python\parsedatetime\tests\TestErrors.py" />
+    <None Include="Python\parsedatetime\tests\TestFrenchLocale.py" />
+    <None Include="Python\parsedatetime\tests\TestGermanLocale.py" />
+    <None Include="Python\parsedatetime\tests\TestInc.py" />
+    <None Include="Python\parsedatetime\tests\TestMultiple.py" />
+    <None Include="Python\parsedatetime\tests\TestPhrases.py" />
+    <None Include="Python\parsedatetime\tests\TestRanges.py" />
+    <None Include="Python\parsedatetime\tests\TestSimpleDateTimes.py" />
+    <None Include="Python\parsedatetime\tests\TestSimpleOffsets.py" />
+    <None Include="Python\parsedatetime\tests\TestUnits.py" />
+    <None Include="Python\parsedatetime\tests\__init__.py" />
+    <None Include="Python\parsedatetime\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

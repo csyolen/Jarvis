@@ -40,8 +40,8 @@ namespace Jarvis.Listeners
             _client.OnInvite += (inviter, channel, ircdata) => _client.Join(ircdata.Message);
             //_client.OnDisconnected += Setup;
 
-            _client.Connect("irc.freenode.net", 6667);
-            _client.Login("[Jarvis]", "[Jarvis]");
+            _client.Connect("irc.rizon.net", 6667);
+            _client.Login("Jarvis", "Jarvis");
             //_client.Join("#clossit");
             _client.Join("#jarvis");
             

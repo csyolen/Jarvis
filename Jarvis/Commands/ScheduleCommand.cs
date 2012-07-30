@@ -14,14 +14,14 @@ namespace Jarvis.Commands
         {
             var task = match.Groups[1].Value;
             var time = match.Groups[2].Value;
-            var dateTime = time.ParseNaturalDateTime();
+            var dateTime = RelativeDateParser.Parse(time);
             ScheduleTicker.Instance.AddTask(dateTime,task);
-            return "I will remind you to {0} {1}".Template(task, time);
+            return "I will remind you to {0} at {1}".Template(task, dateTime.ToShortTimeString());
         }
 
         public string Regexes
         {
-            get { return @"remind.+to (.+) (tomorrow|in .+)"; }
+            get { return @"remind.+to (.+) (tomorrow|in|at .+)"; }
         }
     }
 }
