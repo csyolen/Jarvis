@@ -36,7 +36,10 @@ namespace Jarvis
                         try
                         {
                             var output = command.Handle(input, match, listener);
-                            listener.Output(output);
+                            foreach (var o in output)
+                            {
+                                listener.Output(o);
+                            }
                         }
                         catch
                         {

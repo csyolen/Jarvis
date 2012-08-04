@@ -16,12 +16,12 @@ namespace Jarvis.Commands
 {
     class WeatherCommand : ICommand
     {
-        public string Handle(string input, Match match, IListener listener)
+        public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
             var weather = new Weather();
-            Brain.RunnableManager.Runnable = new ProcessRunnable(weather.Link);
+            Brain.RunnableManager.Runnable = new UrlRunnable(weather.Link);
             WeatherView.Create(weather);
-            return weather.ToString();
+            yield return weather.ToString();
         }
 
         public string Regexes { get { return "weather"; } }

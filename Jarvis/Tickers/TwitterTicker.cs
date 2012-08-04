@@ -30,7 +30,7 @@ namespace Jarvis.Tickers
             {
                 if (tweet.Entities.Urls.Count() > 0)
                 {
-                    Brain.RunnableManager.Runnable = new ProcessRunnable(tweet.Entities.Urls.First().Url);
+                    Brain.RunnableManager.Runnable = new UrlRunnable(tweet.Entities.Urls.First().Url);
                     foreach (var twitterEntityUrl in tweet.Entities.Urls)
                     {
                         tweet.Text = tweet.Text.Replace(twitterEntityUrl.Url, "");

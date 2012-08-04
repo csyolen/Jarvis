@@ -15,7 +15,7 @@ namespace Jarvis.Utilities
             var output = "";
             foreach (var split in splits)
             {
-                if (split.ToLower().IsRegexMatch(@"(-|dvdrip|720p|internal|x264|hdtv)")) break;
+                if (split.ToLower().IsRegexMatch(@"(-|dvdrip|720p|internal|x264|hdtv|proper|\d\d\d\d|unrated)")) break;
                 output += split.UppercaseFirst() + " ";
             }
             output = output.RegexRemove(@"\d\d\d\d \d\d \d\d");

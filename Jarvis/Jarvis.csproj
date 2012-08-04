@@ -83,6 +83,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.81.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.1.0.81.0\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.81.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.1.0.81.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Speech" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -112,17 +120,24 @@
     <Compile Include="Commands\ActorsCommand.cs" />
     <Compile Include="Commands\AlarmCommand.cs" />
     <Compile Include="Commands\CloseCommand.cs" />
+    <Compile Include="Commands\MoviesCommand.cs" />
+    <Compile Include="Commands\MusicCommand.cs" />
     <Compile Include="Commands\NetflixCommand.cs" />
     <Compile Include="Commands\RatingCommand.cs" />
     <Compile Include="Commands\ReloadCommand.cs" />
     <Compile Include="Commands\RunnableCommand.cs" />
     <Compile Include="Commands\SayCommand.cs" />
+    <Compile Include="Commands\ScrapCommand.cs" />
     <Compile Include="Commands\TorrentCommand.cs" />
     <Compile Include="Commands\VideoCommand.cs" />
     <Compile Include="Commands\WolframCommand.cs" />
     <Compile Include="Commands\XboxCommand.cs" />
     <Compile Include="Listeners\ImapListener.cs" />
     <Compile Include="Listeners\SocketListener.cs" />
+    <Compile Include="Objects\GoogleVoice.cs" />
+    <Compile Include="Objects\MobileClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Objects\Reference\Google.cs" />
     <Compile Include="Objects\Reference\Wolfram.cs" />
     <Compile Include="Objects\RssFeed.cs" />
@@ -130,6 +145,7 @@
     <Compile Include="Objects\Torrents\FileTypes\RarFile.cs" />
     <Compile Include="Objects\Torrents\FileTypes\VideoFile.cs" />
     <Compile Include="Objects\Torrents\TorrentHandler.cs" />
+    <Compile Include="Objects\Torrents\TorrentLeech.cs" />
     <Compile Include="Objects\TwitterSearch.cs" />
     <Compile Include="Objects\XboxLive.cs" />
     <Compile Include="Pipe.cs" />
@@ -137,6 +153,7 @@
     <Compile Include="Runnables\IRunnable.cs" />
     <Compile Include="Runnables\ProcessRunnable.cs" />
     <Compile Include="Runnables\RunnableManager.cs" />
+    <Compile Include="Runnables\UrlRunnable.cs" />
     <Compile Include="Tickers\ClockTicker.cs" />
     <Compile Include="Tickers\GmailTicker.cs" />
     <Compile Include="Tickers\RssTicker.cs" />
@@ -436,6 +453,17 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="iTunesLib">
+      <Guid>{9E93C96F-CF0D-43F6-8BA8-B807A3370712}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>13</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

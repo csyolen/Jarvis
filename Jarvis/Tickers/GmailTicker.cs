@@ -35,7 +35,7 @@ namespace Jarvis.Tickers
                     if (entry.Issued < last)
                         continue;
                     Brain.ListenerManager.CurrentListener.Output(Speech.Email.Parse(entry.Author.Name, entry.Title));
-                    Brain.RunnableManager.Runnable = new ProcessRunnable(entry.Link);
+                    Brain.RunnableManager.Runnable = new UrlRunnable(entry.Link);
                 }
             }
         }

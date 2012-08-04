@@ -14,9 +14,11 @@ namespace Jarvis.Objects.Torrents.FileTypes
         public void Handle(FileInfo fi, TorrentHandler th)
         {
             var friendly = fi.Name.TorrentName();
-            var path = @"C:\home\media\tv\" + friendly + fi.Extension;
-            fi.MoveTo(path);
-            Brain.RunnableManager.Runnable = new ProcessRunnable(path);
+            var di = new FileInfo(@"C:\home\media\tv\" + friendly + fi.Extension);
+            if (di.Exists)
+                di.Delete();
+            fi.MoveTo(di.FullName);
+            Brain.RunnableManager.Runnable = new ProcessRunnable(di.FullName);
             Brain.ListenerManager.CurrentListener.Output("{0} is ready to be watched.".Template(friendly));
         }
 

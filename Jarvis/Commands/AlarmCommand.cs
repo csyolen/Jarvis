@@ -11,11 +11,11 @@ namespace Jarvis.Commands
 {
     class AlarmCommand : ICommand
     {
-        public string Handle(string input, Match match, IListener listener)
+        public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
             ClockTicker.Instance.StopAlarm();
             Brain.Awake = true;
-            return "Good morning sir.";
+            yield return "Good morning sir.";
         }
 
         public string Regexes { get { return "alarm"; } }

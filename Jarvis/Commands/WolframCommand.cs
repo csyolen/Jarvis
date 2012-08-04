@@ -14,7 +14,7 @@ namespace Jarvis.Commands
     class WolframCommand : ICommand
     {
         private const string AppId = "2PWVJ9-9XEHHYT93V";
-        public string Handle(string input, Match match, IListener listener)
+        public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
             var query = input;
             if (match.Groups[1].Value == "wolfram")
@@ -26,17 +26,17 @@ namespace Jarvis.Commands
                 APIKey = AppId
             }));
             if (!result.Success)
-                return "";
+                yield return "";
             var r = "";
             var answerPod = result.Pods.FirstOrDefault(o => o.Title.ToLower().Contains("result"));
             var interpretationPod = result.Pods.FirstOrDefault(o => o.Title.ToLower().Contains("input interpretation"));
             if (answerPod == null || interpretationPod == null)
-                return "";
+                yield return "";
 
             var interpretation = interpretationPod.SubPods[0].PodText.Replace(" |", "'s").UppercaseFirst();
             var answer = answerPod.SubPods[0].PodText.RemoveExtraSpaces().Trim();
 
-            return ("{0} is {1}".Template(interpretation, answer)).Replace("\n", " ");
+            yield return ("{0} is {1}".Template(interpretation, answer)).Replace("\n", " ");
         }
 
         public string Regexes

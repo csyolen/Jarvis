@@ -10,10 +10,10 @@ namespace Jarvis.Commands
 {
     class SayCommand : ICommand
     {
-        public string Handle(string input, Match match, IListener listener)
+        public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
             var text = match.Groups[1].Value;
-            return text;
+            yield return text;
         }
 
         public string Regexes { get { return "say (.+)"; } }

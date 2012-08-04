@@ -11,7 +11,7 @@ namespace Jarvis.Commands
 {
     class CloseCommand : ICommand 
     {
-        public string Handle(string input, Match match, IListener listener)
+        public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
             var process = match.Groups[1].Value.ToLower();
             var list = Process.GetProcesses().Where(o => o.ProcessName.ToLower().Contains(process)).ToList();
@@ -27,8 +27,8 @@ namespace Jarvis.Commands
                 catch (Exception)
                 {
                 }
+                yield return "I've closed " + p.ProcessName;
             }
-            return closed.Aggregate("", (current, close) => current + ("I've closed " + close + Environment.NewLine));
         }
 
         public string Regexes

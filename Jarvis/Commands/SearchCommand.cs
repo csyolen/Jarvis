@@ -12,12 +12,12 @@ namespace Jarvis.Commands
 {
     class SearchCommand : ICommand
     {
-        public string Handle(string input, Match match, IListener listener)
+        public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
             var subject = match.Groups[1].Value;
             var search = new Search(subject);
-            Brain.RunnableManager.Runnable = new ProcessRunnable(search.Link);
-            return search.Description;
+            Brain.RunnableManager.Runnable = new UrlRunnable(search.Link);
+            yield return search.Description;
         }
 
         public string Regexes

@@ -12,10 +12,10 @@ namespace Jarvis.Commands
 {
     class NetflixCommand : ICommand
     {
-        public string Handle(string input, Match match, IListener listener)
+        public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
             BrowserView.Create("http://netflix.com");
-            return Speech.Yes.Parse();
+            yield return Speech.Yes.Parse();
         }
 
         public string Regexes { get { return "netflix"; } }

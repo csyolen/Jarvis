@@ -39,6 +39,11 @@ namespace Jarvis.Views
         {
             InitializeComponent();
             Browser.Loaded += (sender, args) => Browser.Navigate(new Uri(url));
+            this.Closing += (sender, args) =>
+                {
+                    Browser.Dispose();
+                    this.Grid.Children.Remove(Browser);
+                };
         }
     }
 }

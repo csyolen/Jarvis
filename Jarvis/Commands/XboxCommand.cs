@@ -11,11 +11,11 @@ namespace Jarvis.Commands
 {
     class XboxCommand : ICommand
     {
-        public string Handle(string input, Match match, IListener listener)
+        public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
             var x = XboxLive.FromGamerTag("dharun");
-            var r = x.Friends.Where(o => o.IsOnline).Aggregate("", (current, source) => current + (source.Description + Environment.NewLine));
-            return r.Trim();
+            var r = x.Friends.Where(o => o.IsOnline).Select(o => o.Description);
+            return r;
         }
 
         public string Regexes { get { return "xbox"; } }

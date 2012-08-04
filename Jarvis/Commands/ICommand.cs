@@ -9,7 +9,7 @@ namespace Jarvis.Commands
 {
     public interface ICommand
     {
-        string Handle(string input, Match match, IListener listener);
+        IEnumerable<string> Handle(string input, Match match, IListener listener);
         string Regexes { get; }
     }
 }
