@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using Jarvis.Objects;
-using Jarvis.Runnables;
 using Jarvis.Views;
 using Newtonsoft.Json.Linq;
 
@@ -30,7 +30,8 @@ namespace Jarvis.Tickers
             {
                 if (tweet.Entities.Urls.Count() > 0)
                 {
-                    Brain.RunnableManager.Runnable = new UrlRunnable(tweet.Entities.Urls.First().Url);
+                    var tweet1 = tweet;
+                    Brain.Pipe.ListenNext((s, match, arg3) => Process.Start(tweet1.Entities.Urls.First().Url), "more", "open");
                     foreach (var twitterEntityUrl in tweet.Entities.Urls)
                     {
                         tweet.Text = tweet.Text.Replace(twitterEntityUrl.Url, "");

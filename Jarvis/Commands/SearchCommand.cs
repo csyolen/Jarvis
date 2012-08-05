@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Jarvis.Listeners;
 using Jarvis.Objects.Reference;
-using Jarvis.Runnables;
 
 namespace Jarvis.Commands
 {
@@ -16,7 +16,8 @@ namespace Jarvis.Commands
         {
             var subject = match.Groups[1].Value;
             var search = new Search(subject);
-            Brain.RunnableManager.Runnable = new UrlRunnable(search.Link);
+            Brain.Pipe.ListenNext((s, match1, arg3) => Process.Start(search.Link), "more");
+            Brain.Pipe.ListenOnce((s, match1, arg3) => Process.Start(search.Link), "more about " + subject);
             yield return search.Description;
         }
 

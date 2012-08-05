@@ -16,7 +16,18 @@ namespace Jarvis.Commands
         public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
             var tl = new TorrentLeech();
-            return tl.Movies().Select(o => o.Friendly).Distinct().Take(10);
+            var movies = tl.Movies().Distinct().Take(10).ToArray();
+            var names = movies.Select(o => o.Friendly).ToArray();
+            Brain.Pipe.ListenOnce((i, m, l) =>
+                {
+                    var movie = m.Groups[1].Value;
+                    var entry = movies.FirstOrDefault(o => o.Friendly.ToLower().Contains(movie));
+                    if(entry == null)
+                        return;
+                    entry.Download();
+                    l.Output("Downloading " + entry.Friendly + "...");
+                }, "download (.+)");
+            return names;
         }
 
         public string Regexes { get { return "movies"; } }

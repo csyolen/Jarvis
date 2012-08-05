@@ -125,7 +125,6 @@
     <Compile Include="Commands\NetflixCommand.cs" />
     <Compile Include="Commands\RatingCommand.cs" />
     <Compile Include="Commands\ReloadCommand.cs" />
-    <Compile Include="Commands\RunnableCommand.cs" />
     <Compile Include="Commands\SayCommand.cs" />
     <Compile Include="Commands\ScrapCommand.cs" />
     <Compile Include="Commands\TorrentCommand.cs" />
@@ -149,11 +148,6 @@
     <Compile Include="Objects\TwitterSearch.cs" />
     <Compile Include="Objects\XboxLive.cs" />
     <Compile Include="Pipe.cs" />
-    <Compile Include="Runnables\ActionRunnable.cs" />
-    <Compile Include="Runnables\IRunnable.cs" />
-    <Compile Include="Runnables\ProcessRunnable.cs" />
-    <Compile Include="Runnables\RunnableManager.cs" />
-    <Compile Include="Runnables\UrlRunnable.cs" />
     <Compile Include="Tickers\ClockTicker.cs" />
     <Compile Include="Tickers\GmailTicker.cs" />
     <Compile Include="Tickers\RssTicker.cs" />

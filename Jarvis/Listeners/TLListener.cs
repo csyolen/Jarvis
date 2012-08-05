@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Jarvis.Objects.Torrents;
-using Jarvis.Runnables;
 using Jarvis.Utilities;
 using Meebey.SmartIrc4net;
 using MonoTorrent.Client;
@@ -88,7 +87,7 @@ namespace Jarvis.Listeners
             manager.TorrentStateChanged += (sender, args) =>
             {
                 if (args.OldState != TorrentState.Downloading) return;
-                Brain.RunnableManager.Runnable = new ProcessRunnable(args.TorrentManager.SavePath);
+                Brain.Pipe.ListenNext((s, match, arg3) => Process.Start(args.TorrentManager.SavePath), "open");
                 Output("Finished downloading " + args.TorrentManager.Torrent.Name.TorrentName());
                 new TorrentHandler(args.TorrentManager).Handle();
             };

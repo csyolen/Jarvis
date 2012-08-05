@@ -9,7 +9,6 @@ using Jarvis.Listeners;
 using Jarvis.Locale;
 using Jarvis.Objects;
 using Jarvis.Objects.Reference;
-using Jarvis.Runnables;
 using Jarvis.Views;
 
 namespace Jarvis.Commands
@@ -19,7 +18,7 @@ namespace Jarvis.Commands
         public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
             var weather = new Weather();
-            Brain.RunnableManager.Runnable = new UrlRunnable(weather.Link);
+            
             WeatherView.Create(weather);
             yield return weather.ToString();
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -22,7 +23,7 @@ namespace Jarvis.Objects.Torrents
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(_browserClient.DownloadString(url));
-            return doc.DocumentNode.SelectNodes("//*[@id='torrenttable']/tbody/tr").Select(o => new TorrentLeechEntry(o)).ToList();
+            return doc.DocumentNode.SelectNodes("//*[@id='torrenttable']/tbody/tr").Select(o => new TorrentLeechEntry(o, _browserClient)).ToList();
         }
 
         public List<TorrentLeechEntry> Movies()
@@ -34,9 +35,11 @@ namespace Jarvis.Objects.Torrents
 
     public class TorrentLeechEntry
     {
+        private readonly BrowserClient _client;
 
-        public TorrentLeechEntry(HtmlNode node)
+        public TorrentLeechEntry(HtmlNode node, BrowserClient client)
         {
+            _client = client;
             Title = node.SelectSingleNode(".//span[@class='title']/a").InnerText;
             Friendly = Title.TorrentName();
             var size = node.SelectSingleNode(".//td[5]").InnerText;
@@ -44,12 +47,20 @@ namespace Jarvis.Objects.Torrents
             if (size.Contains("GB"))
                 number *= 1024;
             Size = number;
+            Torrent = "http://torrentleech.org" + node.SelectSingleNode(".//td[@class='quickdownload']/a").Attributes["href"].Value;
         }
         
         public string Title { get; private set; }
         public string Friendly { get; private set; }
-        public string Download { get; private set; }
+        public string Torrent { get; private set; }
         public double Size { get; private set; }
+
+        public void Download()
+        {
+            var path = Friendly + ".torrent";
+            _client.DownloadFile(Torrent, path);
+            Process.Start(path);
+        }
 
         public override bool Equals(object obj)
         {

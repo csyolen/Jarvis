@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Jarvis.Commands;
 using Jarvis.Listeners;
@@ -12,6 +14,8 @@ namespace Jarvis
         public Pipe()
         {
             _commands = new HashSet<ICommand>();
+            _once = new List<DynamicCommand>();
+            _next = new List<DynamicCommand>();
         }
 
         public void AddCommand(ICommand handler) 
@@ -19,6 +23,31 @@ namespace Jarvis
             _commands.Add(handler);
         }
 
+        private class DynamicCommand
+        {
+            public Action<string, Match, IListener> Function {get; set; }
+            public string[] Regexes { get; set; }
+        }
+
+        private List<DynamicCommand> _once;
+        public void ListenOnce(Action<string, Match, IListener> function, params string[] regexes)
+        {
+            _once.Add(new DynamicCommand()
+            {
+                Function = function,
+                Regexes = regexes.Select(o => o.ToLower()).ToArray()
+            });
+        }
+
+        private List<DynamicCommand> _next;
+        public void ListenNext(Action<string, Match, IListener> function, params string[] regexes)
+        {
+            _next.Add(new DynamicCommand()
+            {
+                Function = function,
+                Regexes = regexes.Select(o => o.ToLower()).ToArray()
+            });
+        }
 
         public void Handle(string input, IListener listener)
         {
@@ -47,6 +76,35 @@ namespace Jarvis
                         }
                     }).Start();
             }
+
+            foreach (var c in _once.ToArray())
+            {
+                foreach (var regex in c.Regexes)
+                {
+                    var match = input.RegexMatch(regex);
+                    if(!match.Success)
+                        continue;
+                    c.Function(input, match, listener);
+                    _once.Remove(c);
+                    goto BreakOnceLoops;
+                }
+            }
+            BreakOnceLoops:
+
+            foreach (var c in _next.ToArray())
+            {
+                foreach (var regex in c.Regexes)
+                {
+                    var match = input.RegexMatch(regex);
+                    if (!match.Success)
+                        continue;
+                    c.Function(input, match, listener);
+                    _next.Remove(c);
+                    break;
+                }
+            }
+            _next.Clear();
+
         }
     }
 }

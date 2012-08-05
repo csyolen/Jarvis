@@ -5,7 +5,10 @@
 // 
 
 using System;
+using System.IO;
+using System.Linq;
 using System.Net;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace Jarvis.Objects
@@ -35,21 +38,31 @@ namespace Jarvis.Objects
 
         public static GoogleVoice Inbox()
         {
-            var client = new BrowserClient("www.google.com");
-            client.Headers[HttpRequestHeader.Cookie] =
-                "gv=DQAAAOoBAACcZaG4tc-bJ07CTlw54dmO5gOnyN1Cr4DcjjsP5H1qWlf4kux1wtePCJTTghFzjHyQHXlyIcc-cgg_ayJRyqibXItVuJF7RKvuIHAenx8rP_-w09KcjTNjgmtb27G2at6p2qhAenHSA953hX_TlT2lvuRr4wU4wqXtbMoxFI4ymAHS1HW1T4Tcd-zjcIndulEcUU2jgoxoXtwAYdFc6Aa-ThFYAJfBAaFHpDtGJ7P5cw8_K5bqTldQvJp33u29YbxuPtPvHnN_kQw2aJsDEUnmqTrHE-BukPqrcMBODWmamSRaFTjlMmAXvXRVi0JA7XpGOV0ri4d4VJuRlIxF_7YOK5ZZbnVW8Db1zE1BLxHBRmdar5Z2WuLaAEXgwf5hQxBioZdavH_BbPnb0d9c7C3_VLFxzaVYo4C7WaMODCVxT11bOSKP9qZV8xRWnT3it8UGo24xrQJaziNPXsPVquyiNx4M0GUErGMP0aqOKy5TsLfT23cd15e7sLwDjDtnwP0CVG43jK6efKL5R1vYBewMr4nHVZLpZBzANVGtm58Mw6y90vBUt4Ve9BvVnyl5J8V6G1o-EFaiZlNo1PynKgft_21RgRoUZjOUSUzLuDYgsz8CMmEjvNG48OBK56i2TuXqGBbKl6SK3qrJq0_KhFLL;Path=/voice;Secure;HttpOnly";
 
-            var json =
-                client.PostData(
-                    "https://www.google.com/voice/m/x?m=list&l=inbox&o=0&lm=10&v=10", new
-                        {
-                           m = "list",
-                           l = "inbox",
-                           lm = 10,
-                           v = 10
-                        });
-            return FromJson(json);
+            var request = (HttpWebRequest)WebRequest.Create("https://www.google.com/voice/m/x?m=list&l=inbox&o=0&lm=10&v=10");
+            request.Method = "POST";
+            string postData = "{\"gvx\":\"NJH5SCksWfGkUHoZRb5oPbgpUnc:1344091762000\"}";
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = byteArray.Length;
 
+            request.UserAgent =
+                "Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18 (KHTML, like Gecko) Version/4.0 Mobile/7A341 Safari/528.16";
+            request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+            request.Referer = "https://www.google.com/voice/m";
+            request.Headers[HttpRequestHeader.Cookie] =
+                "gv=DQAAAOgAAAC_-od-p66KLRectbr0CbHm9TL7apzK745icVLSN8uiNoD-jN2QCEokOPLL68XvsIkjTUQ2EHmH9ymdny6wq8uXGBxKl7UaHtQMaExRuNrnyYmp2aaNrSDnH23K654Q5NKEcz56YNiCJX-56zi8_AbLm7Gvh0iPhRv-2i4QKWsuJ74SddKTZgILcmkCu-AE9oepBGDSpwelpzGk7ZEKN2mL04xpljgcMpO59H0Bhvo7u0peOHxSvg08xlgYvACGskNiCdCtAilgvaDUs5xBmXqZYr-JZlNNqGXYJ0q4uGR0eyQBXoH-rSkEzl68R4c377k; gvx=NJH5SCksWfGkUHoZRb5oPbgpUnc:1344091762000; PREF=ID=086ea826a1403cc3:U=01b696cd9fcb13c3:FF=4:LD=en:NR=10:TM=1334743545:LM=1344102359:SG=3:S=T7JYnh5pfKgIk0je; NID=62=kbY9N7EqWby0Aq1--c08lEtvwwnV7uJe50_PAgptlYfG-ghf2PBxiiWnpFg3UzhHfbMDwSr_u7Rtld6RJp52pqU_MLDAYDHhsI6ZvFQT1zWj_rHEMx0_U64wLVtONBcz8E8MlBq8UIkOXLdclu8NAVM_OcbWKeVC4P1QZ0nm85yn01tnG8hhqQBUGic-nQ; SID=DQAAAOMAAACA9Ls5H38viyAdoOklcngRVIehvz7FuhZ7VjBFRk8dCRZvIFg_iazcIQVlG86WfB3J49_IHuntng0S7YOro1dSrYpUX_vKf3GayhSOqvsvRcgoU2xmh_4YSIUXdKQhSUCa8f8dC7bdqCkREDINsMyZTGvCo7oln5djO20o388xWvlXxU9tTXdBDZnvuuoy30kWOQWRKdxpWBycNePtyyDpgDLDtc2IR4mdQrj1IwkVeblT8fwgKQ8kbtMriVpxCRnMrLllV6b55T8TYzWM99rKsCj-DoKokuvOPGsY7pTvX4Ymlf0KVK750ucNfUt8mtM; HSID=AmbjVFQG3HqJY6ZuZ; SSID=AvD4MxG9JVApQjntq; APISID=4DVrq2NUKDMqKZom/ALli6pwzzt7nHyPBH; SAPISID=Mz2aVNqjt4gRTzWU/AgJGzqMyNX7hHzMcY; S=grandcentral=PYMljq_EubSM6OtDobUI4A";
+            var dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+            var response = request.GetResponse();
+            dataStream = response.GetResponseStream();
+            var reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            return FromJson(responseFromServer.Substring(5).Trim());
         }
     }
 

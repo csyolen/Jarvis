@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -9,7 +10,6 @@ using System.Timers;
 using System.Xml;
 using Jarvis.Locale;
 using Jarvis.Objects;
-using Jarvis.Runnables;
 
 namespace Jarvis.Tickers
 {
@@ -23,7 +23,6 @@ namespace Jarvis.Tickers
 
         protected override void Tick()
         {
-            return;
             foreach (var account in Brain.Settings.EmailAccounts)
             {
                 var doc = GetAtom(account.Email, account.Password);
@@ -35,7 +34,7 @@ namespace Jarvis.Tickers
                     if (entry.Issued < last)
                         continue;
                     Brain.ListenerManager.CurrentListener.Output(Speech.Email.Parse(entry.Author.Name, entry.Title));
-                    Brain.RunnableManager.Runnable = new UrlRunnable(entry.Link);
+                    Brain.Pipe.ListenNext((s, match, arg3) => Process.Start(entry.Link), "open|more|show");
                 }
             }
         }

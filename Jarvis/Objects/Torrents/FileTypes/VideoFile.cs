@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Jarvis.Runnables;
 using Jarvis.Utilities;
 
 namespace Jarvis.Objects.Torrents.FileTypes
@@ -18,7 +18,7 @@ namespace Jarvis.Objects.Torrents.FileTypes
             if (di.Exists)
                 di.Delete();
             fi.MoveTo(di.FullName);
-            Brain.RunnableManager.Runnable = new ProcessRunnable(di.FullName);
+            Brain.Pipe.ListenNext((s, match, listener) => Process.Start(di.FullName), "play|open|ok");
             Brain.ListenerManager.CurrentListener.Output("{0} is ready to be watched.".Template(friendly));
         }
 
