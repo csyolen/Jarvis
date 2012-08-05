@@ -57,14 +57,15 @@ namespace Jarvis
 
             foreach (var command in _commands)
             {
+                var closure = command;
                 new Thread(() =>
                     {
-                        var match = input.RegexMatch(command.Regexes);
+                        var match = input.RegexMatch(closure.Regexes);
                         if (!match.Success)
                             return;
                         try
                         {
-                            var output = command.Handle(input, match, listener);
+                            var output = closure.Handle(input, match, listener);
                             foreach (var o in output)
                             {
                                 listener.Output(o);
@@ -72,7 +73,7 @@ namespace Jarvis
                         }
                         catch
                         {
-                            listener.Output("Error at " + command.GetType().Name);
+                            listener.Output("Error at " + closure.GetType().Name);
                         }
                     }).Start();
             }
