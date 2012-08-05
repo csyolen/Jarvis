@@ -48,12 +48,18 @@ namespace Jarvis
             //Listeners
             ListenerManager = new ListenerManager(Pipe);
 
-            //Handlers
+            //Legacy Command Support
             typeof(ICommand).Assembly
                 .GetTypes()
                 .Where(o => o.GetInterface(typeof(ICommand).FullName) != null && o.IsClass)
                 .Select(source => (ICommand)Activator.CreateInstance(source)).ToList()
-                .ForEach(o => Pipe.AddCommand(o));
+                .ForEach(o => Brain.Pipe.Listen((input, match, listener) =>
+                    {
+                        foreach (var r in o.Handle(input,match, listener))
+                        {
+                            listener.Output(r);
+                        }
+                    }, o.Regexes));
 
             //Tickers 
             typeof(TickerBase).Assembly

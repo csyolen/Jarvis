@@ -7,6 +7,8 @@ using Jarvis.Commands;
 using Jarvis.Listeners;
 namespace Jarvis
 {
+    public delegate void Command(string input, Match match, IListener listener);
+
     public class Pipe
     {
         private readonly HashSet<ICommand> _commands;
@@ -14,97 +16,98 @@ namespace Jarvis
         public Pipe()
         {
             _commands = new HashSet<ICommand>();
-            _once = new List<DynamicCommand>();
-            _next = new List<DynamicCommand>();
-        }
 
-        public void AddCommand(ICommand handler) 
-        {
-            _commands.Add(handler);
+            _permanent = new List<DynamicCommand>();
+            _once = new List<DynamicCommand>();
+            Commands.Commands.Register(this);
         }
 
         private class DynamicCommand
         {
-            public Action<string, Match, IListener> Function {get; set; }
-            public string[] Regexes { get; set; }
+            public Command Function {get; set; }
+            public List<string> Regexes { get; set; }
+
+            public bool Execute(string input, IListener listener)
+            {
+                foreach (var regex in Regexes)
+                {
+                    var match = input.RegexMatch(regex);
+                    if (!match.Success)
+                        continue;
+                    try
+                    {
+                        Function(input, match, listener);
+                    }
+                    catch(Exception e)
+                    {
+                        listener.Output("Error: " + e.Message);
+                    }
+                    return true;
+                }
+                return false;
+            }
         }
 
-        private List<DynamicCommand> _once;
-        public void ListenOnce(Action<string, Match, IListener> function, params string[] regexes)
+        private readonly List<DynamicCommand> _permanent;
+        public void Listen(Command function, string regex, params string[] regexes)
         {
-            _once.Add(new DynamicCommand()
+            var cmd = new DynamicCommand()
             {
                 Function = function,
-                Regexes = regexes.Select(o => o.ToLower()).ToArray()
-            });
+                Regexes = regexes.Select(o => o.ToLower()).ToList()
+            };
+            cmd.Regexes.Add(regex);
+            _permanent.Add(cmd);
         }
 
-        private List<DynamicCommand> _next;
-        public void ListenNext(Action<string, Match, IListener> function, params string[] regexes)
+        private readonly List<DynamicCommand> _once;
+        public void ListenOnce(Command function, string regex, params string[] regexes)
         {
-            _next.Add(new DynamicCommand()
+            var cmd = new DynamicCommand()
             {
                 Function = function,
-                Regexes = regexes.Select(o => o.ToLower()).ToArray()
-            });
+                Regexes = regexes.Select(o => o.ToLower()).ToList()
+            };
+            cmd.Regexes.Add(regex);
+            _once.Add(cmd);
+        }
+
+        private DynamicCommand _next;
+        public void ListenNext(Command function, string regex, params string[] regexes)
+        {
+            var cmd = new DynamicCommand()
+                {
+                    Function = function,
+                    Regexes = regexes.Select(o => o.ToLower()).ToList()
+                };
+            cmd.Regexes.Add(regex);
+            _next = cmd;
         }
 
         public void Handle(string input, IListener listener)
         {
             if(input == null) return;
             input = input.ToLower();
-            bool handled = false;
 
-            foreach (var command in _commands)
+            foreach (var c in _permanent.ToArray())
             {
-                var closure = command;
-                new Thread(() =>
-                    {
-                        var match = input.RegexMatch(closure.Regexes);
-                        if (!match.Success)
-                            return;
-                        try
-                        {
-                            var output = closure.Handle(input, match, listener);
-                            foreach (var o in output)
-                            {
-                                listener.Output(o);
-                            }
-                        }
-                        catch
-                        {
-                            listener.Output("Error at " + closure.GetType().Name);
-                        }
-                    }).Start();
+                if(c.Execute(input, listener))
+                    break;
             }
 
             foreach (var c in _once.ToArray())
             {
-                foreach (var regex in c.Regexes)
+                if(c.Execute(input, listener))
                 {
-                    var match = input.RegexMatch(regex);
-                    if(!match.Success)
-                        continue;
-                    c.Function(input, match, listener);
                     _once.Remove(c);
-                    goto BreakOnceLoops;
-                }
-            }
-            BreakOnceLoops:
-
-            foreach (var c in _next.ToArray())
-            {
-                foreach (var regex in c.Regexes)
-                {
-                    var match = input.RegexMatch(regex);
-                    if (!match.Success)
-                        continue;
-                    c.Function(input, match, listener);
-                    _next.Remove(c);
                     break;
                 }
             }
-            _next.Clear();
+
+            if(_next != null)
+                _next.Execute(input, listener);
+
+            _next = null;
 
         }
     }
