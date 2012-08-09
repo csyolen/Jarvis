@@ -4,68 +4,72 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Meebey.SmartIrc4net;
+using IrcDotNet;
 
 namespace Jarvis.Listeners
 {
     public class IRCListener : ListenerBase
     {
         private IrcClient _client;
-        public IRCListener(Pipe pipe) : base(pipe)
+        public IRCListener(Pipe pipe)
+            : base(pipe)
         {
+            _client = new IrcClient();
+            _client.FloodPreventer = new IrcStandardFloodPreventer(4, 2000);
         }
 
         public override void Loop()
         {
             while (true)
             {
-                try
-                {
-                    Setup();
-                    _client.Listen();
 
-                }
-                catch(Exception e)
+                using (var mre = new ManualResetEvent(false))
                 {
-                    Brain.ListenerManager.CurrentListener.Output(e.Message + " IRC disconnected. Will reconnect in 5 seconds.");
+                    if (_client != null)
+                        _client.Disconnect();
+
+                    _client = new IrcClient();
+                    _client.Registered +=
+                        (sender, args) =>
+                            {
+
+                                _client.LocalUser.JoinedChannel += (sender1, args1) =>
+                                    {
+                                        args1.Channel.MessageReceived += (o, eventArgs) => Handle(eventArgs.Text);
+                                        RawOutput("I have joined " + args1.Channel.Name);
+                                        mre.Set();
+                                    };
+                                _client.Channels.Join("#jarvis");
+                                Brain.ListenerManager.CurrentListener.Output("I have made a connection to Rizon.");
+                            };
+                    _client.Connect("irc.rizon.net", 6667, false, new IrcUserRegistrationInfo()
+                        {
+                            NickName = "Jarvis",
+                            UserName = "Jarvis",
+                            RealName = "Jarvis"
+                        });
+                    mre.WaitOne(30.Seconds());
+                    while (_client.IsConnected)
+                    {
+                        5.Seconds().Sleep();
+                    }
                 }
-                Thread.Sleep(5.Seconds());
+                Brain.ListenerManager.CurrentListener.Output("I've failed to maintain a connection to Rizon.");
             }
-        }
-
-        private void Setup()
-        {
-            if (_client != null)
-                _client.Disconnect();
-
-            _client = new IrcClient {ChannelSyncing = true, SendDelay = 200, AutoRetry = true, AutoReconnect = true};
-
-            _client.OnChannelMessage += ircdata => Handle(ircdata.Message); ;
-            _client.OnInvite += (inviter, channel, ircdata) => _client.Join(ircdata.Message);
-            _client.OnJoin += (channel, who, ircdata) => Brain.ListenerManager.CurrentListener.Output("Jarvis connected to " + channel);
-            _client.OnDisconnect += () =>
-            {
-                throw new Exception();
-            };
-
-            _client.Connect("irc.rizon.net", 6667);
-            _client.Login("Jarvis", "Jarvis");
-            _client.Join("#jarvis");
-            
         }
 
         public override void RawOutput(string output)
         {
-            if(!_client.Connected)
-                return;
-            var lines = output.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var line in lines)
+            if (_client.IsRegistered)
             {
-                foreach (var channel in _client.JoinedChannels)
+                var lines = output.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var line in lines)
                 {
-                    _client.Message(SendType.Message, channel, line);
+                    foreach (var channel in _client.Channels)
+                    {
+                        _client.LocalUser.SendMessage(channel, line);
+                    }
                 }
-                Thread.Sleep(1000);
             }
             Brain.ListenerManager.Voice.Output(output);
         }
