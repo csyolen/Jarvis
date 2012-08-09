@@ -26,9 +26,8 @@ namespace Jarvis.Objects
         {
             var result = "";
             var splits = host.Split('.');
-            var domain = host;
-            if (splits.Count() == 3)
-                domain = "." + splits[1] + "." + splits[2];
+            var length = splits.Length;
+            string domain = "." + splits[length-2] + "." + splits[length-1];
             try
             {
                 var strPath = GetChromeCookiePath();
@@ -39,7 +38,7 @@ namespace Jarvis.Objects
                     using (SQLiteCommand cmd = conn.CreateCommand())
                     {
                         cmd.CommandText =
-                            "SELECT name || '=' || value || ';' FROM cookies WHERE host_key = '{0}' OR host_key = '{1}';"
+                            "SELECT name || '=' || value || ';' FROM cookies WHERE host_key = '{0}' OR host_key = '{1}'"
                                 .Template(host, domain);
 
                         conn.Open();

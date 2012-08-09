@@ -38,6 +38,8 @@ namespace Jarvis.Listeners
         {
             if(!Brain.Awake)
                 return;
+            if(output.Contains("\r\n"))
+                return;
             /*
             if(_current != null)
                 _synthesizer.SpeakAsyncCancel(_current);

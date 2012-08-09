@@ -25,9 +25,11 @@ namespace Jarvis.Listeners
                     _client.Listen();
 
                 }
-                catch {}
-                Brain.ListenerManager.CurrentListener.Output("IRC disconnected. Will reconnect in 60 seconds.");
-                Thread.Sleep(60.Seconds());
+                catch(Exception e)
+                {
+                    Brain.ListenerManager.CurrentListener.Output(e.Message + " IRC disconnected. Will reconnect in 5 seconds.");
+                }
+                Thread.Sleep(5.Seconds());
             }
         }
 
@@ -59,7 +61,7 @@ namespace Jarvis.Listeners
                 {
                     _client.Message(SendType.Message, channel, line);
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(1000);
             }
             Brain.ListenerManager.Voice.Output(output);
         }

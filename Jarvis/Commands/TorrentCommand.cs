@@ -13,9 +13,7 @@ namespace Jarvis.Commands
     {
         public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
-            return Brain.ListenerManager.TorrentLeech.Torrents.Select(
-                torrent => "{0} is {1}, {2}% done"
-                    .Template(torrent.Torrent.Name.TorrentName(), torrent.State.ToString().ToLower(), Math.Floor(torrent.Progress)));
+            yield return "";
         }
 
         public string Regexes { get { return "torrent"; } }

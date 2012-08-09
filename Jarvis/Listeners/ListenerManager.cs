@@ -19,12 +19,9 @@ namespace Jarvis.Listeners
             Voice = new VoiceListener(pipe);
             Voice.Start();
 
-            TorrentLeech = new TLListener(pipe);
-            TorrentLeech.Start();
-
             //new SocketListener(pipe).Start();
 
-            //Email
+            new FileWatcherListener(pipe).Start();
 
             foreach (var account in Brain.Settings.EmailAccounts)
             {
@@ -39,6 +36,5 @@ namespace Jarvis.Listeners
         public IRCListener IRC { get; private set; }
         public ConsoleListener Console { get; private set; }
         public VoiceListener Voice { get; private set; }
-        public TLListener TorrentLeech { get; private set; }
     }
 }

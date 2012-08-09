@@ -22,7 +22,7 @@ namespace Jarvis
             Commands.Commands.Register(this);
         }
 
-        private class DynamicCommand
+        private class DynamicCommand : ICloneable
         {
             public Command Function {get; set; }
             public List<string> Regexes { get; set; }
@@ -34,45 +34,61 @@ namespace Jarvis
                     var match = input.RegexMatch(regex);
                     if (!match.Success)
                         continue;
-                    try
-                    {
-                        Function(input, match, listener);
-                    }
-                    catch(Exception e)
-                    {
-                        listener.Output("Error: " + e.Message);
-                    }
+                    new Thread(() =>
+                        {
+                            try
+                            {
+                                Function(input, match, listener);
+                            }
+                            catch (Exception e)
+                            {
+                                listener.Output("Error: " + e.Message);
+                            }
+                        }).Start();
                     return true;
                 }
                 return false;
             }
+
+            public object Clone()
+            {
+                return new DynamicCommand()
+                    {
+                        Function = Function,
+                        Regexes = Regexes
+                    };
+            }
         }
 
         private readonly List<DynamicCommand> _permanent;
+        private readonly List<DynamicCommand> _once;
+        private DynamicCommand _next;
+        private void Register(List<DynamicCommand> list, Command function, string regex, params string[] regexes)
+        {
+            var cmd = new DynamicCommand()
+            {
+                Function = function,
+                Regexes = regexes.Select(o => o.ToLower()).ToList()
+            };
+            cmd.Regexes.Add(regex);
+            foreach (var command in list.ToList())
+            {
+                command.Regexes = command.Regexes.Where(o => !cmd.Regexes.Contains(o)).ToList();
+                if (command.Regexes.Count == 0)
+                    list.Remove(command);
+            }
+            list.Add(cmd);
+        }
         public void Listen(Command function, string regex, params string[] regexes)
         {
-            var cmd = new DynamicCommand()
-            {
-                Function = function,
-                Regexes = regexes.Select(o => o.ToLower()).ToList()
-            };
-            cmd.Regexes.Add(regex);
-            _permanent.Add(cmd);
+            Register(_permanent, function, regex, regexes);
         }
 
-        private readonly List<DynamicCommand> _once;
         public void ListenOnce(Command function, string regex, params string[] regexes)
         {
-            var cmd = new DynamicCommand()
-            {
-                Function = function,
-                Regexes = regexes.Select(o => o.ToLower()).ToList()
-            };
-            cmd.Regexes.Add(regex);
-            _once.Add(cmd);
+            Register(_once, function, regex, regexes);
         }
 
-        private DynamicCommand _next;
         public void ListenNext(Command function, string regex, params string[] regexes)
         {
             var cmd = new DynamicCommand()
@@ -89,6 +105,14 @@ namespace Jarvis
             if(input == null) return;
             input = input.ToLower();
 
+            if (_next != null)
+            {
+                var clone = (DynamicCommand) _next.Clone();
+                _next = null;
+                if(clone.Execute(input, listener))
+                    return;
+            }
+            _next = null;
             foreach (var c in _permanent.ToArray())
             {
                 if(c.Execute(input, listener))
@@ -98,17 +122,9 @@ namespace Jarvis
             foreach (var c in _once.ToArray())
             {
                 if(c.Execute(input, listener))
-                {
                     _once.Remove(c);
-                    break;
-                }
+                
             }
-
-            if(_next != null)
-                _next.Execute(input, listener);
-
-            _next = null;
-
         }
     }
 }
