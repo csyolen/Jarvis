@@ -49,6 +49,6 @@ namespace Jarvis.Commands
             }
         }
 
-        public string Regexes { get { return "play(.+)"; } }
+        public string Regexes { get { return "play(.*)"; } }
     }
 }
