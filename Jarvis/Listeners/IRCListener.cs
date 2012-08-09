@@ -43,6 +43,10 @@ namespace Jarvis.Listeners
             _client.OnChannelMessage += ircdata => Handle(ircdata.Message); ;
             _client.OnInvite += (inviter, channel, ircdata) => _client.Join(ircdata.Message);
             _client.OnJoin += (channel, who, ircdata) => Brain.ListenerManager.CurrentListener.Output("Jarvis connected to " + channel);
+            _client.OnDisconnect += () =>
+            {
+                throw new Exception();
+            };
 
             _client.Connect("irc.rizon.net", 6667);
             _client.Login("Jarvis", "Jarvis");
