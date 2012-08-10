@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Jarvis.Objects.Reference;
 using Jarvis.Tickers;
 
@@ -48,6 +50,15 @@ namespace Jarvis.Commands
                 }
                 listener.Output("I've closed " + list.FirstOrDefault());
             }, "close (.+)");
+
+            //Restart 
+            pipe.Listen((input, match, listener) =>
+                {
+                    listener.Output("Restarting...");
+                    var path = Assembly.GetAssembly(typeof (Brain)).Location;
+                    Process.Start(path);
+                    Environment.Exit(0);
+                }, "restart");
         }
     }       
 }

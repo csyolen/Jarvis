@@ -14,7 +14,7 @@ namespace Jarvis.Commands
     {
         public IEnumerable<string> Handle(string input, Match match, IListener listener)
         {
-            BrowserView.Create("http://netflix.com");
+            BrowserView.Create("http://netflix.com", "Netflix");
             yield return Speech.Yes.Parse();
         }
 
