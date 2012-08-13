@@ -42,11 +42,6 @@ namespace Jarvis.Listeners
                         mre.Set();
                         _client.RfcJoin("#jarvis");
                     };
-                _client.OnError += (sender, args) =>
-                    {
-                        _client.Disconnect();
-                        Loop();
-                    };
 
                 _client.Connect("irc.clossit.com", 6668);
                 _client.Login("Jarvis", "Jarvis");

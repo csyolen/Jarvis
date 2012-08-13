@@ -404,11 +404,6 @@
     <Resource Include="GettingStarted.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Content\images\shadow.png" />
-    <Resource Include="Content\images\arrows-ffffff.png" />
-    <Content Include="Content\superfish-navbar.css" />
-    <Content Include="Content\superfish-vertical.css" />
-    <Content Include="Content\superfish.css" />
     <Content Include="Images\tile.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
