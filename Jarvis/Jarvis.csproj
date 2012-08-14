@@ -148,6 +148,7 @@
     <Compile Include="Pipe.cs" />
     <Compile Include="Tickers\ClockTicker.cs" />
     <Compile Include="Tickers\GmailTicker.cs" />
+    <Compile Include="Tickers\ReaderTicker.cs" />
     <Compile Include="Tickers\RssTicker.cs" />
     <Compile Include="Tickers\TickerBase.cs" />
     <Compile Include="Tickers\ScheduleTicker.cs" />

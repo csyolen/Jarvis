@@ -40,6 +40,19 @@ namespace Jarvis.Listeners
                     };
                 fw.EnableRaisingEvents = true;
             }
+            var zips = new FileSystemWatcher { Filter = "*.zip", Path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Downloads"};
+            zips.Renamed += (sender, args) =>
+                {
+                    var fi = new FileInfo(args.FullPath);
+                    var path = fi.DirectoryName + "/" + args.Name.RegexRemove(@"\.zip");
+                    var psi = new ProcessStartInfo("unzip",
+                                                   "-d \"{0}\" \"{1}\"".Template(path, args.FullPath));
+                    var p = Process.Start(psi);
+                    p.WaitForExit();
+                    Output("Extracted zip file.");
+                    Process.Start(path);
+                };
+            zips.EnableRaisingEvents = true;
         }
 
         public override void RawOutput(string output)
