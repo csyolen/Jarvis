@@ -31,7 +31,7 @@ namespace Jarvis.Tickers
                 if (tweet.Entities.Urls.Count() > 0)
                 {
                     var tweet1 = tweet;
-                    Brain.Pipe.ListenNext((s, match, arg3) => Process.Start(tweet1.Entities.Urls.First().Url), "more", "open");
+                    Brain.Pipe.ListenOnce((s, match, arg3) => Process.Start(tweet1.Entities.Urls.First().Url), "open|more|show");
                     foreach (var twitterEntityUrl in tweet.Entities.Urls)
                     {
                         tweet.Text = tweet.Text.Replace(twitterEntityUrl.Url, "");

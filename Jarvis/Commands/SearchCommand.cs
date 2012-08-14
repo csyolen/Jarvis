@@ -16,8 +16,7 @@ namespace Jarvis.Commands
         {
             var subject = match.Groups[1].Value;
             var search = new Search(subject);
-            Brain.Pipe.ListenNext((s, match1, arg3) => Process.Start(search.Link), "more");
-            Brain.Pipe.ListenOnce((s, match1, arg3) => Process.Start(search.Link), "more about " + subject);
+            Brain.Pipe.ListenOnce((s, match1, arg3) => Process.Start(search.Link), "open|more|show");
             yield return search.Description;
         }
 

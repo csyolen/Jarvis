@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AE.Net.Mail;
+using ImapX;
 using Jarvis.Locale;
 using Jarvis.Utilities;
 
@@ -21,11 +21,12 @@ namespace Jarvis.Listeners
 
         public override void Loop()
         {
-            return;
-            var client = new ImapClient();
-            client.Connect("imap.gmail.com", 993, true, false);
-            client.Login(_account.Email, _account.Password);
-            var inbox = client.SelectMailbox("INBOX");
+            /*
+            var client = new ImapClient("imap.gmail.com", 993, true);
+            client.LogIn(_account.Email, _account.Password);
+            var inbox = client.Folders["INBOX"];
+            inbox.Select();
+            inbox.
             client.SuscribeMailbox("INBOX");
             client.NewMessage += (sender, args) =>
                 {
@@ -36,6 +37,7 @@ namespace Jarvis.Listeners
                         Output(Speech.Email.Parse(message.From.DisplayName, message.Subject));
                     }
                 };
+             */
         }
 
         public override void RawOutput(string output)

@@ -22,14 +22,20 @@ namespace Jarvis.Tickers
             var lines = new WebClient().DownloadString(url).Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             var trimmed = lines.Where(o => o.StartsWith("SUMMARY") || o.StartsWith("DTSTART")).Select(o => o.Replace("SUMMARY:", "").Replace("DTSTART:", "")).ToList();
             var sched = ScheduleTicker.Instance;
+            Brain.Settings.Shows = new HashSet<string>();
             for (int i = 0; i < trimmed.Count; i += 2)
             {
-                var name = trimmed[i + 1];
-                if(name.Contains("Skins") || name.Contains("Korra"))
-                    continue;
-                var entry = new TVEntry(name, trimmed[i]);
-                if(entry.Time < DateTime.Now) continue;
-                sched.AddTask(entry.Time, "Watch " + entry.Name.Trim());
+                try
+                {
+                    var name = trimmed[i + 1];
+                    var entry = new TVEntry(name, trimmed[i]);
+                    if (entry.Time < DateTime.Now) continue;
+                    Brain.Settings.Shows.Add(entry.Name.ToLower().Trim());
+                    sched.AddTask(entry.Time, "Watch " + entry.Name.Trim());
+                }
+                catch
+                {
+                }
             }
         }
     }

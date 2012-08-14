@@ -34,7 +34,7 @@ namespace Jarvis.Tickers
                     if (entry.Issued < last)
                         continue;
                     Brain.ListenerManager.CurrentListener.Output(Speech.Email.Parse(entry.Author.Name, entry.Title));
-                    Brain.Pipe.ListenNext((s, match, arg3) => Process.Start(entry.Link), "open|more|show");
+                    Brain.Pipe.ListenOnce((s, match, arg3) => Process.Start(entry.Link), "open|more|show");
                 }
             }
         }
@@ -54,8 +54,8 @@ namespace Jarvis.Tickers
                 var credentials = new NetworkCredential(username, password);
                 webRequest.Credentials = credentials;
 
-                WebResponse webResponse = webRequest.GetResponse();
-                Stream stream = webResponse.GetResponseStream();
+                var webResponse = webRequest.GetResponse();
+                var stream = webResponse.GetResponseStream();
 
                 while ((byteCount = stream.Read(buffer, 0, buffer.Length)) > 0)
                     sBuilder.Append(Encoding.ASCII.GetString(buffer, 0, byteCount));

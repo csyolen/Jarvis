@@ -36,6 +36,8 @@ namespace Jarvis.Utilities
                 var splits = s.Split('=');
                 RegexFilters.Add(new Tuple<string, string>(splits[0], splits[1]));
             }
+
+            Shows = new HashSet<string>();
         }
 
         public List<string> Twitters { get; private set; }
@@ -45,6 +47,7 @@ namespace Jarvis.Utilities
         public List<EmailAccount> EmailAccounts { get; private set; }
         public TimeSpan Wake { get; private set; }
         public TimeSpan Sleep { get; private set; }
+        public HashSet<string> Shows { get; set; } 
     }
 
     public class EmailAccount

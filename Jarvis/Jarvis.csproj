@@ -49,9 +49,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AE.Net.Mail">
-      <HintPath>..\..\..\forks\aenetmail\bin\Debug\AE.Net.Mail.dll</HintPath>
-    </Reference>
     <Reference Include="AIMLbot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\libs\AIMLbot.dll</HintPath>
@@ -62,6 +59,9 @@
     <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\HtmlAgilityPack.1.4.3\lib\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ImapX">
+      <HintPath>..\packages\ImapX.1.2.3.126\lib\net\ImapX.dll</HintPath>
     </Reference>
     <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -398,9 +398,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Twitterizer2.license.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="GettingStarted.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -419,7 +416,6 @@
     <Content Include="Sounds\alarm.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="superfish_example.html" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

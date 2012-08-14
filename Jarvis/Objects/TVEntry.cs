@@ -18,7 +18,7 @@ namespace Jarvis.Objects
         {
             Name = Regex.Replace(name, "-\\s[\\d\\s-x]+", "- ").Trim().Split('-')[0];
             time = time.Replace("T", "");
-            Time = DateTime.ParseExact(time, "yyyyMMddhhmmss", CultureInfo.InvariantCulture).AddHours(-5);
+            Time = DateTime.ParseExact(time, "yyyyMMddhhmmss", CultureInfo.InvariantCulture).ToLocalTime();
         }
     }
 }
