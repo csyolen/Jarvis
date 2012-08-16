@@ -7,7 +7,6 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using AIMLbot;
 using Jarvis.Commands;
 using Jarvis.Listeners;
 using Jarvis.Locale;
@@ -24,8 +23,6 @@ namespace Jarvis
         public static Settings Settings { get; set; }
 
         public static Pipe Pipe { get; set; }
-        private static readonly Bot Bot = new Bot();
-        private static readonly User User = new User("Jarvis", Bot);
 
         public static bool Awake { get; set; }
   
@@ -73,12 +70,6 @@ namespace Jarvis
                 new RssTicker(rss).Start();
             }
 
-        }
-
-        public static string Chat(string input)
-        {
-            var request = new Request(input, User, Bot);
-            return Bot.Chat(request).Output;
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Badger.Api;
 
 namespace Jarvis.Tickers
 {
@@ -16,10 +17,13 @@ namespace Jarvis.Tickers
         private Cookie _cookie;
         private string _sid;
         private string _auth;
+        private BadgerClient _badger;
 
         public ReaderPoller() : base(60.Seconds())
         {
             Connect();
+            _badger = new BadgerClient("Reader");
+            _badger.SetColor("#07AD07");
         }
 
 
@@ -142,6 +146,7 @@ namespace Jarvis.Tickers
             int numberOfFeed;
             string details;
             int unread = GetUnreadCount(out details, out numberOfFeed);
+            _badger.Set(unread);
             if(unread - _last > 15)
             {
                 Brain.ListenerManager.CurrentListener.Output("Sir you have " + unread + " unread items in Google Reader.");
